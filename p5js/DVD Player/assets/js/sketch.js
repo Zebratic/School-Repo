@@ -24,7 +24,7 @@ class Player
   }
 }
 
-class Bullet
+class Enemy
 {
   constructor(x, y, speed, angle)
   {
@@ -35,26 +35,10 @@ class Bullet
   }
 }
 
-class Enemy
-{
-  constructor(x, y, speed)
-  {
-    this.x = x;
-    this.y = y;
-    this.speed = speed;
-  }
-}
-
 function setup()
 {
   player = new Player(screen_x / 2, screen_y / 2, 5, 20, true, 0, 0);
   createCanvas(screen_x, screen_y);
-}
-
-function GetMousePos()
-{
-  mx = map(mouseX, 0, width, 0, screen_x);
-  my = map(mouseY, 0, height, 0, screen_y);
 }
 
 function UpdatePlayerPos()
@@ -84,67 +68,11 @@ function UpdatePlayerPos()
   }
 }
 
-function DrawGunAndBullets()
-{
-  // render bullets
-  for (var i = 0; i < bullets.length; i++)
-  {
-    var bullet = bullets[i];
-    
-    // move bullet to next position
-    bullet.x += bullet.speed * cos(bullet.angle);
-    bullet.y += bullet.speed * sin(bullet.angle);
-
-    // if bullet is off screen, remove it
-    if (bullet.x < 0 || bullet.x > screen_x || bullet.y < 0 || bullet.y > screen_y)
-    {
-      bullets.splice(i, 1);
-    }
-
-    // if bullet touches enemy, remove enemy and bullet
-    for (var j = 0; j < enemies.length; j++)
-    {
-      var enemy = enemies[j];
-      if (bullet.x > enemy.x - player.size && bullet.x < enemy.x + player.size && bullet.y > enemy.y - player.size && bullet.y < enemy.y + player.size)
-      {
-        enemies.splice(j, 1);
-        bullets.splice(i, 1);
-
-        // increase player points
-        player.points++;
-
-        // if player has more points than highscore, set highscore to player points
-        if (player.points > player.highscore)
-        {
-          player.highscore = player.points;
-        }
-      }
-    }
-
-    // draw bullet
-    circle(bullet.x, bullet.y, 5);
-  }
-  
-  // draw a line from player to mouse
-  line(player.x, player.y, mx, my);
-}
-
-function mouseClicked()
-{
-   // shoot bullet in direction of mouse
-    var bullet = new Bullet(player.x, player.y, 10, atan2(my - player.y, mx - player.x));
-    // add bullet to array
-    bullets.push(bullet);
-}
-
 function DrawPlayer()
 {
   // draw player
   fill(255, 255, 255);
   circle(player.x, player.y, player.size * 2);
-
-  // draw gun pointing at mouse
-  DrawGunAndBullets();
 }
 
 function DrawEnemies()
@@ -152,7 +80,7 @@ function DrawEnemies()
   if (enemies.length < (player.points + 1)) // enemy count
   {
     // spawn enemy at random position
-    var enemy = new Enemy(random(0, screen_x), random(0, screen_y), random(1, 5));
+    var enemy = new Enemy(random(0, screen_x), random(0, screen_y), random(5, 5), random(0, 359));
     enemies.push(enemy);
   }
 
@@ -161,9 +89,31 @@ function DrawEnemies()
   {
     var enemy = enemies[i];
 
-    // move towards player
-    enemy.x += enemy.speed * cos(atan2(player.y - enemy.y, player.x - enemy.x));
-    enemy.y += enemy.speed * sin(atan2(player.y - enemy.y, player.x - enemy.x));
+    // move enemy and bounce if it hits the walls
+    enemy.x += enemy.speed * cos(enemy.angle);
+    enemy.y += enemy.speed * sin(enemy.angle);
+   
+    if (enemy.y < 0 || enemy.y > screen_y)
+    {
+      enemy.angle = -enemy.angle;
+    }
+    // THIS IS BUGGY - DOESN'T WORK
+    if (enemy.x < 0 ||enemy.x > screen_x)
+    {
+      enemy.angle = -enemy.angle;
+    }
+
+    // draw angle arrow line
+    line(enemy.x, enemy.y, enemy.x + enemy_size * cos(enemy.angle), enemy.y + enemy_size * sin(enemy.angle));
+    // draw 2 lines from the tip of the arrow in the angle of 45 degrees
+    line(enemy.x + enemy_size * cos(enemy.angle), enemy.y + enemy_size * sin(enemy.angle), enemy.x + enemy_size * cos(enemy.angle + PI / 4), enemy.y + enemy_size * sin(enemy.angle + PI / 4));
+    line(enemy.x + enemy_size * cos(enemy.angle), enemy.y + enemy_size * sin(enemy.angle), enemy.x + enemy_size * cos(enemy.angle - PI / 4), enemy.y + enemy_size * sin(enemy.angle - PI / 4));
+
+    // draw enemy postion text
+    textSize(16);
+    fill(255, 0, 0);
+    text("x: " + enemy.x + " y: " + enemy.y, 10, 60);
+    text("angle: " + enemy.angle, 10, 80);
 
     // if enemy touches player, kill player
     if (enemy.x > player.x - player.size && enemy.x < player.x + player.size && enemy.y > player.y - player.size && enemy.y < player.y + player.size)
@@ -215,13 +165,6 @@ function draw()
   }
   else
   {
-    // getting mouse position on canvas
-    GetMousePos();
-
-    // draw 2 lines at mouse position ()
-    line(mx - player.size / 2, my, mx + player.size / 2, my);
-    line(mx, my - player.size / 2, mx, my + player.size / 2);
-
     UpdatePlayerPos();
 
     DrawPlayer();
