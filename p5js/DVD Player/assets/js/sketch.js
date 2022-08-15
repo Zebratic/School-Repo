@@ -87,36 +87,42 @@ function DrawEnemies()
   // draw enemies
   for (var i = 0; i < enemies.length; i++)
   {
-    var enemy = enemies[i];
+    var selected_enemy = enemies[i];
 
     // move enemy and bounce if it hits the walls
-    enemy.x += enemy.speed * cos(enemy.angle);
-    enemy.y += enemy.speed * sin(enemy.angle);
+    selected_enemy.x += selected_enemy.speed * cos(selected_enemy.angle);
+    selected_enemy.y += selected_enemy.speed * sin(selected_enemy.angle);
    
-    if (enemy.y < 0 || enemy.y > screen_y)
+    if (selected_enemy.y < 0 || selected_enemy.y > screen_y)
     {
-      enemy.angle = -enemy.angle;
+      selected_enemy.angle = -selected_enemy.angle;
     }
     // THIS IS BUGGY - DOESN'T WORK
-    if (enemy.x < 0 ||enemy.x > screen_x)
+    if (selected_enemy.x < 0 || selected_enemy.x > screen_x)
     {
-      enemy.angle = -enemy.angle;
+      selected_enemy.angle += selected_enemy.angle;
+      if (selected_enemy.angle >= 360)
+      {
+        var left = selected_enemy.angle - 360;
+        selected_enemy.angle = left;
+      }
     }
 
     // draw angle arrow line
-    line(enemy.x, enemy.y, enemy.x + enemy_size * cos(enemy.angle), enemy.y + enemy_size * sin(enemy.angle));
+    line(selected_enemy.x, selected_enemy.y, selected_enemy.x + selected_enemy * cos(selected_enemy.angle), selected_enemy.y + enemy_size * sin(selected_enemy.angle));
     // draw 2 lines from the tip of the arrow in the angle of 45 degrees
-    line(enemy.x + enemy_size * cos(enemy.angle), enemy.y + enemy_size * sin(enemy.angle), enemy.x + enemy_size * cos(enemy.angle + PI / 4), enemy.y + enemy_size * sin(enemy.angle + PI / 4));
-    line(enemy.x + enemy_size * cos(enemy.angle), enemy.y + enemy_size * sin(enemy.angle), enemy.x + enemy_size * cos(enemy.angle - PI / 4), enemy.y + enemy_size * sin(enemy.angle - PI / 4));
+    line(selected_enemy.x + enemy_size * cos(selected_enemy.angle), selected_enemy.y + enemy_size * sin(selected_enemy.angle), selected_enemy.x + enemy_size * cos(selected_enemy.angle + PI / 4), selected_enemy.y + enemy_size * sin(selected_enemy.angle + PI / 4));
+    line(selected_enemy.x + enemy_size * cos(selected_enemy.angle), selected_enemy.y + enemy_size * sin(selected_enemy.angle), selected_enemy.x + enemy_size * cos(selected_enemy.angle - PI / 4), selected_enemy.y + enemy_size * sin(selected_enemy.angle - PI / 4));
 
     // draw enemy postion text
     textSize(16);
     fill(255, 0, 0);
-    text("x: " + enemy.x + " y: " + enemy.y, 10, 60);
-    text("angle: " + enemy.angle, 10, 80);
+    text("x: " + selected_enemy.x + " y: " + selected_enemy.y, 10, 60);
+    text("angle: " + selected_enemy.angle, 10, 80);
 
-    // if enemy touches player, kill player
-    if (enemy.x > player.x - player.size && enemy.x < player.x + player.size && enemy.y > player.y - player.size && enemy.y < player.y + player.size)
+
+    // if player touches enemy, kill player
+    if (dist(player.x, player.y, selected_enemy.x, selected_enemy.y) < (player.size * 2))
     {
       player.alive = false;
       // remove all enemies and bullets
@@ -125,7 +131,7 @@ function DrawEnemies()
     }
 
     fill(255, 0, 0);
-    circle(enemy.x, enemy.y, enemy_size);
+    circle(selected_enemy.x, selected_enemy.y, enemy_size);
   }
 }
 

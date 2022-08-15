@@ -104,8 +104,8 @@ function DrawGunAndBullets()
     // if bullet touches enemy, remove enemy and bullet
     for (var j = 0; j < enemies.length; j++)
     {
-      var enemy = enemies[j];
-      if (bullet.x > enemy.x - player.size && bullet.x < enemy.x + player.size && bullet.y > enemy.y - player.size && bullet.y < enemy.y + player.size)
+      var selected_enemy = enemies[j];
+      if (bullet.x > selected_enemy.x - player.size && bullet.x < selected_enemy.x + player.size && bullet.y > selected_enemy.y - player.size && bullet.y < selected_enemy.y + player.size)
       {
         enemies.splice(j, 1);
         bullets.splice(i, 1);
@@ -159,14 +159,14 @@ function DrawEnemies()
   // draw enemies
   for (var i = 0; i < enemies.length; i++)
   {
-    var enemy = enemies[i];
+    var selected_enemy = enemies[i];
 
     // move towards player
-    enemy.x += enemy.speed * cos(atan2(player.y - enemy.y, player.x - enemy.x));
-    enemy.y += enemy.speed * sin(atan2(player.y - enemy.y, player.x - enemy.x));
+    selected_enemy.x += selected_enemy.speed * cos(atan2(player.y - selected_enemy.y, player.x - selected_enemy.x));
+    selected_enemy.y += selected_enemy.speed * sin(atan2(player.y - selected_enemy.y, player.x - selected_enemy.x));
 
     // if enemy touches player, kill player
-    if (enemy.x > player.x - player.size && enemy.x < player.x + player.size && enemy.y > player.y - player.size && enemy.y < player.y + player.size)
+    if (selected_enemy.x > player.x - player.size && selected_enemy.x < player.x + player.size && selected_enemy.y > player.y - player.size && selected_enemy.y < player.y + player.size)
     {
       player.alive = false;
       // remove all enemies and bullets
@@ -175,7 +175,7 @@ function DrawEnemies()
     }
 
     fill(255, 0, 0);
-    circle(enemy.x, enemy.y, enemy_size);
+    circle(selected_enemy.x, selected_enemy.y, enemy_size);
   }
 }
 
