@@ -1,5 +1,7 @@
 var players = [];
 
+var KillPlayersOnTouch = true;
+
 // teamtype enum ?
 var TEAM_UNKNOWN = 0;
 var TEAM_RED = 1;
@@ -22,6 +24,10 @@ class Player
 
 function setup()
 {
+    // GET WINDOW SIZE
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    createCanvas(w, h);
     var teamsize = 10;
     var playerspeed = 5;
 
@@ -63,6 +69,7 @@ function RenderMap() // draws a line in the middle of the screen
 
 function MovePlayers()
 {
+    var playerstokill = [];
     for (var i = 0; i < players.length; i++)
     {
         // move player towards nearest player of opposite team
@@ -95,23 +102,36 @@ function MovePlayers()
         // if player touches other player, swap teams
         for (var i3 = 0; i3 < players.length; i3++)
         {
-            if (i != i3 && players[i3].swappedtimer == 0  && players[i].swappedtimer == 0)
+            // if opposing team
+            if (players[i].team != players[i3].team)
             {
-                // if player is not in swappedarrays
-                if (dist(players[i].x, players[i].y, players[i3].x, players[i3].y) < players[i].size)
+                if (i != i3 && players[i3].swappedtimer == 0  && players[i].swappedtimer == 0)
                 {
-                    // rock paper scissors to win who gets swapped
-                    if (random(0, 1) == 0)
+                    // if player is not in swappedarrays
+                    if (dist(players[i].x, players[i].y, players[i3].x, players[i3].y) < players[i].size)
                     {
-                        players[i].team = players[i3].team;
-                        players[i].swappedtimer = 10;
-                    }
-                    else
-                    {
-                        players[i3].team = players[i].team;
-                        players[i3].swappedtimer = 10;
-                    }
-                }   
+                        if (random(0, 1) == 0)
+                        {
+                            if (KillPlayersOnTouch)
+                                playerstokill.push(players[i]);
+                            else
+                            {
+                                players[i].team = players[i3].team;
+                                players[i].swappedtimer = 10;
+                            }
+                        }
+                        else
+                        {
+                            if (KillPlayersOnTouch)
+                                playerstokill.push(players[i3]);
+                            else
+                            {
+                                players[i3].team = players[i].team;
+                                players[i3].swappedtimer = 10;
+                            }
+                        }
+                    }   
+                }
             }
         }
 
@@ -119,6 +139,10 @@ function MovePlayers()
         if (players[i].swappedtimer > 0)
             players[i].swappedtimer--;
     }
+
+    // kill players if they are in the playerstokill array
+    for (var i4 = 0; i4 < playerstokill.length; i4++)
+        players.splice(players.indexOf(playerstokill[i4]), 1);
 }
 
 function RenderStats()
@@ -126,18 +150,16 @@ function RenderStats()
     textSize(34);
     textAlign(CENTER);
     stroke(0);
-    fill(255);
-    text(gamerunning ? "Running" : "Not Running", width / 2, 30);
-
     fill(255, 0, 0);
-    text("Red: " + players.filter(x => x.team == TEAM_RED).length, width / 2, 70);
+    text("Red: " + players.filter(x => x.team == TEAM_RED).length, width / 2, 40);
 
     fill(0, 0, 255);
-    text("Blue: " + players.filter(x => x.team == TEAM_BLUE).length, width / 2, 110);
+    text("Blue: " + players.filter(x => x.team == TEAM_BLUE).length, width / 2, 80);
 }
 
 function draw()
 {
+    strokeWeight(2);
     background(0);
     RenderMap();
     RenderPlayers();
@@ -148,19 +170,50 @@ function draw()
     {
         MovePlayers();
     }
+    else
+    {
+        // show controls
+        background(0, 0, 0, 200);
+        textSize(54);
+        textAlign(CENTER);
+        strokeWeight(4);
+        stroke(0);
+        fill(255, 255, 255);
+        text("Paused", width / 2, 100);
+
+        textSize(54);
+        fill(255, 255, 0);
+        text("Controls:", width / 2, height / 2 - 100);
+        textSize(34);
+        fill(180, 180, 0);
+        text("Escape - Pause/Unpause simulation", width / 2, height / 2 - 50);
+        text("Enter - Reset simulation", width / 2, height / 2);
+        text("Space - Spawn 10 players on each team", width / 2, height / 2 + 50);
+
+
+
+
+        textSize(54);
+        fill(255, 255, 255);
+        text("Settings:", width / 2, height / 2 + 150);
+        textSize(34);
+
+        if (KillPlayersOnTouch) fill(255, 0, 0);
+        else                    fill(0, 255, 0);
+
+        text("1 - On Touch: " + (KillPlayersOnTouch ? "Kill" : "Swap Team"), width / 2, height / 2 + 200);
+    }
 }
 
 
 
 function keyPressed()
 {
-    if (keyCode == 32)
-        gamerunning = !gamerunning;
-    else if (keyCode == ENTER)
-        setup();
-    else if (keyCode == ESCAPE)
+    switch (keyCode)
     {
-        players = [];
-        gamerunning = false;
+        case ESCAPE: gamerunning = !gamerunning; break;
+        case ENTER: players = []; break;
+        case 32: setup(); break;                                    // 0x32 = space key
+        case 49: KillPlayersOnTouch = !KillPlayersOnTouch; break;   // 0x49 = 1 key
     }
-}
+}  
