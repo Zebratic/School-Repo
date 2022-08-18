@@ -9,6 +9,10 @@ var TEAM_BLUE = 2;
 
 var gamerunning = false;
 
+var w = window.innerWidth;
+var h = window.innerHeight;
+createCanvas(w, h);
+
 class Player
 {
     constructor(x, y, size, team, speed)
@@ -24,10 +28,6 @@ class Player
 
 function setup()
 {
-    // GET WINDOW SIZE
-    var w = window.innerWidth;
-    var h = window.innerHeight;
-    createCanvas(w, h);
     var teamsize = 10;
     var playerspeed = 5;
 
@@ -117,7 +117,7 @@ function MovePlayers()
                             else
                             {
                                 players[i].team = players[i3].team;
-                                players[i].swappedtimer = 10;
+                                players[i].swappedtimer = 2;
                             }
                         }
                         else
@@ -127,7 +127,7 @@ function MovePlayers()
                             else
                             {
                                 players[i3].team = players[i].team;
-                                players[i3].swappedtimer = 10;
+                                players[i3].swappedtimer = 2;
                             }
                         }
                     }   
@@ -164,6 +164,8 @@ function draw()
     RenderMap();
     RenderPlayers();
     RenderStats();
+
+    if (keyIsDown((32))) setup();
 
     // show text if game is running
     if (gamerunning)
