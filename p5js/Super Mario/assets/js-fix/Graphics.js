@@ -1,14 +1,14 @@
 function Graphics() {
 
-    this.p_kf = loadImage("assets/imgs/props/kf.png");
-    this.p_kozf = loadImage("assets/imgs/props/kozf.png");
-    this.p_nf = loadImage("assets/imgs/props/nf.png");
-    this.p_kdb = loadImage("assets/imgs/props/kdb.png");
-    this.p_ndb = loadImage("assets/imgs/props/ndb.png");
-    this.p_kb = loadImage("assets/imgs/props/kb.png");
-    this.p_kozb = loadImage("assets/imgs/props/kozb.png");
-    this.p_nb = loadImage("assets/imgs/props/nb.png");
-    this.penz = loadImage("assets/imgs/items/money_1.png");
+    this.cloud_1 = loadImage("assets/imgs/props/cloud_1.png");
+    this.cloud_2 = loadImage("assets/imgs/props/cloud_2.png");
+    this.cloud_3 = loadImage("assets/imgs/props/cloud_3.png");
+    this.hill_1 = loadImage("assets/imgs/props/hill_1.png");
+    this.hill_2 = loadImage("assets/imgs/props/hill_2.png");
+    this.bush_1 = loadImage("assets/imgs/props/bush_1.png");
+    this.bush_2 = loadImage("assets/imgs/props/bush_2.png");
+    this.bush_3 = loadImage("assets/imgs/props/bush_3.png");
+    this.money = loadImage("assets/imgs/items/money_1.png");
 
     this.point = 0;
     this.pontx = 80;
@@ -252,49 +252,49 @@ function Graphics() {
 
         for (let i = 0; i <= this.kfx.length - 1; i++) {
             if (abs(this.kfx[i] - player.x) < 1200 && abs(this.kfy[i] - player.y) < 800) {
-                image(this.p_kf, this.kfx[i], this.kfy[i], this.kfm1[i], this.kfm2[i]);
+                image(this.cloud_1, this.kfx[i], this.kfy[i], this.kfm1[i], this.kfm2[i]);
             }
         }
 
         for (let i = 0; i <= this.kozfx.length - 1; i++) {
             if (abs(this.kozfx[i] - player.x) < 1200 && abs(this.kozfy[i] - player.y) < 800) {
-                image(this.p_kozf, this.kozfx[i], this.kozfy[i], this.kozfm1[i], this.kozfm2[i]);
+                image(this.cloud_2, this.kozfx[i], this.kozfy[i], this.kozfm1[i], this.kozfm2[i]);
             }
         }
 
         for (let i = 0; i <= this.nfx.length - 1; i++) {
             if (abs(this.nfx[i] - player.x) < 1200 && abs(this.nfy[i] - player.y) < 800) {
-                image(this.p_nf, this.nfx[i], this.nfy[i], this.nfm1[i], this.nfm2[i]);
+                image(this.cloud_3, this.nfx[i], this.nfy[i], this.nfm1[i], this.nfm2[i]);
             }
         }
 
         for (let i = 0; i <= this.kdbx.length - 1; i++) {
             if (abs(this.kdbx[i] - player.x) < 12000 && abs(this.kdby[i] - player.y) < 800) {
-                image(this.p_kdb, this.kdbx[i], this.kdby[i], this.kdbm1[i], this.kdbm2[i]);
+                image(this.hill_1, this.kdbx[i], this.kdby[i], this.kdbm1[i], this.kdbm2[i]);
             }
         }
 
         for (let i = 0; i <= this.ndbx.length - 1; i++) {
             if (abs(this.ndbx[i] - player.x) < 1200 && abs(this.ndby[i] - player.y) < 800) {
-                image(this.p_ndb, this.ndbx[i], this.ndby[i], this.ndbm1[i], this.ndbm2[i]);
+                image(this.hill_2, this.ndbx[i], this.ndby[i], this.ndbm1[i], this.ndbm2[i]);
             }
         }
 
         for (let i = 0; i <= this.kbx.length - 1; i++) {
             if (abs(this.kbx[i] - player.x) < 1200 && abs(this.kby[i] - player.y) < 800) {
-                image(this.p_kb, this.kbx[i], this.kby[i], this.kbm1[i], this.kbm2[i]);
+                image(this.bush_1, this.kbx[i], this.kby[i], this.kbm1[i], this.kbm2[i]);
             }
         }
 
         for (let i = 0; i <= this.kozbx.length - 1; i++) {
             if (abs(this.kozbx[i] - player.x) < 1200 && abs(this.kozby[i] - player.y) < 800) {
-                image(this.p_kozb, this.kozbx[i], this.kozby[i], this.kozbm1[i], this.kozbm2[i]);
+                image(this.bush_2, this.kozbx[i], this.kozby[i], this.kozbm1[i], this.kozbm2[i]);
             }
         }
 
         for (let i = 0; i <= this.nbx.length - 1; i++) {
             if (abs(this.nbx[i] - player.x) < 1200 && abs(this.nby[i] - player.y) < 800) {
-                image(this.p_nb, this.nbx[i], this.nby[i], this.nbm1[i], this.nbm2[i]);
+                image(this.bush_3, this.nbx[i], this.nby[i], this.nbm1[i], this.nbm2[i]);
             }
         }
 
@@ -304,7 +304,7 @@ function Graphics() {
         text("MARIO", this.pontx - 20, 55);
         text(nf(this.point, 6, 0), this.pontx - 22, 80);
 
-        image(this.penz, this.eremx, 68, 28, 37);
+        image(this.money, this.eremx, 68, 28, 37);
         text("x", this.eremx + 11, 80);
         text(nf(this.erem, 2, 0), this.eremx + 32, 80);
 

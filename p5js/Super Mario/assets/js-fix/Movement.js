@@ -88,7 +88,7 @@ function Movement() {
         }
 
         if (player.moveRight == true && maploader.flipRight == false) {
-            if (money.lathato == true) {
+            if (money.visible == true) {
                 money.speed_v2 = player.speed_v2;
             }
         } else {
@@ -96,7 +96,7 @@ function Movement() {
         }
 
         if (player.moveRight == true && maploader.flipRight == false && player.dead == false) {
-            if (flower.lathato == true || flower.animation == true) {
+            if (flower.visible == true || flower.animation == true) {
                 flower.speed_v2 = player.speed_v2;
             }
         } else {

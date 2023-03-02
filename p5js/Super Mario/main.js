@@ -56,7 +56,7 @@ function draw() {
         mushroom.update();
     }
 
-    if (player.mushroom > 0 || flower.lathato == true) {
+    if (player.mushroom > 0 || flower.visible == true) {
         flower.update();
     }
 

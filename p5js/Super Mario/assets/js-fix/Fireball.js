@@ -9,7 +9,7 @@ function Fireball() {
     this.ye = [];
     this.t = [];
     this.lat = [];
-    this.anim = [];
+    this.animation = [];
     this.vx = [];
     this.vy = [];
     this.vm1 = [];
@@ -20,8 +20,8 @@ function Fireball() {
 
     this.sprites = [];
 
-    this.sprites[1] = loadImage("assets/imgs/props/tuzgolyo_1.png");
-    this.sprites[2] = loadImage("assets/imgs/props/tuzgolyo_2.png");
+    this.sprites[1] = loadImage("assets/imgs/props/fireball_1.png");
+    this.sprites[2] = loadImage("assets/imgs/props/fireball_2.png");
     this.l = -1;
     this.i = "j";
     this.te[1] = false;
@@ -60,8 +60,8 @@ function Fireball() {
             this.lat[this.l] = true;
             this.lat[this.l + 1] = true;
 
-            this.anim[this.l] = false;
-            this.anim[this.l + 1] = false;
+            this.animation[this.l] = false;
+            this.animation[this.l + 1] = false;
 
             if (this.i == "j") {
                 this.sz[this.l] = 15;
@@ -92,7 +92,6 @@ function Fireball() {
 
                 squash_animation.sz[squash_animation.i + 1] = 240;
                 squash_animation.sz[squash_animation.i + 2] = 240;
-
             }
         }
 
@@ -126,7 +125,7 @@ function Fireball() {
                             points_animation.e[points_animation.ai] = 100;
                             points_animation.l[points_animation.ai] = true;
                             graphics.point += points_animation.e[points_animation.ai];
-                            this.anim[i] = true;
+                            this.animation[i] = true;
                             this.vx[i] = this.x[i];
                             this.vy[i] = this.y[i];
                             this.vm1[i] = 38 * 0.25;
@@ -153,7 +152,7 @@ function Fireball() {
                             points_animation.e[points_animation.ai] = 100;
                             points_animation.l[points_animation.ai] = true;
                             graphics.point += points_animation.e[points_animation.ai];
-                            this.anim[i] = true;
+                            this.animation[i] = true;
                             this.vx[i] = this.x[i];
                             this.vy[i] = this.y[i];
                             this.vm1[i] = 38 * 0.25;
@@ -170,12 +169,12 @@ function Fireball() {
 
 
             } else {
-                if (this.anim[i] == true) {
+                if (this.animation[i] == true) {
                     image(this.sprites[2], this.vx[i], this.vy[i], this.vm1[i], this.vm2[i]);
                     this.vm1[i] *= 1.2;
                     this.vm2[i] *= 1.2;
                     if (this.vm1[i] >= 38) {
-                        this.anim[i] = false;
+                        this.animation[i] = false;
                     }
                 }
             }

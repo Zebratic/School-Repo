@@ -18,7 +18,7 @@ function Mushroom() {
 
     this.flipLeft = false;
     this.flipRight = false;
-    this.lathato = false;
+    this.visible = false;
     this.animation = false;
     this.gba = -1;
     this.gb = 0;
@@ -31,7 +31,7 @@ function Mushroom() {
             this.gba = maploader.kerd;
             this.flipLeft = false;
             this.flipRight = false;
-            this.lathato = false;
+            this.visible = false;
             this.animation = false;
             this.gb = maploader.kerd
         }
@@ -55,13 +55,13 @@ function Mushroom() {
 
                 this.animation = false;
                 maploader.kerd = 0;
-                this.lathato = true;
+                this.visible = true;
 
             }
         }
 
-        if (abs(this.x - player.x) < 30 && abs(this.y - player.y) < 30 && this.lathato == true) {
-            this.lathato = false;
+        if (abs(this.x - player.x) < 30 && abs(this.y - player.y) < 30 && this.visible == true) {
+            this.visible = false;
             player.mushroom++;
             points_animation.ai++;
             points_animation.x[points_animation.ai] = this.x;
@@ -72,7 +72,7 @@ function Mushroom() {
             graphics.point += points_animation.e[points_animation.ai];
         }
 
-        if (this.lathato == true) {
+        if (this.visible == true) {
             if (this.flipRight == true) {
                 this.moveLeft = true;
                 this.moveRight = false;

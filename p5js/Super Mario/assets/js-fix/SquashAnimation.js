@@ -18,8 +18,8 @@ function Squash_Animation() {
     this.l[5] = false;
     this.l[6] = false;
 
-    this.sprites[0] = loadImage("assets/imgs/enemies/ellenseg_1_bal.png");
-    this.sprites[1] = loadImage("assets/imgs/enemies/kacsa_teknos_3.png");
+    this.sprites[0] = loadImage("assets/imgs/enemies/goomba_left.png");
+    this.sprites[1] = loadImage("assets/imgs/enemies/koopa_closed.png");
     this.update = function () {
 
         for (var i = 1; i <= 6; i++) {

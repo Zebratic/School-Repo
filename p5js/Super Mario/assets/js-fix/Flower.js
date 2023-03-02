@@ -7,9 +7,9 @@ function Flower() {
 
     this.sprites = [];
 
-    this.sprites[1] = loadImage("assets/imgs/items/virag_1.png");
-    this.sprites[2] = loadImage("assets/imgs/items/virag_2.png");
-    this.sprites[3] = loadImage("assets/imgs/items/virag_3.png");
+    this.sprites[1] = loadImage("assets/imgs/items/flower_1.png");
+    this.sprites[2] = loadImage("assets/imgs/items/flower_2.png");
+    this.sprites[3] = loadImage("assets/imgs/items/flower_3.png");
     this.sprites[0] = this.sprites[1];
     this.elapsedMilliseconds = 0;
     this.i = 0;
@@ -27,7 +27,7 @@ function Flower() {
             this.gba = maploader.kerd;
             this.flipLeft = false;
             this.flipRight = false;
-            this.lathato = false;
+            this.visible = false;
             this.animation = false;
 
         }
@@ -69,12 +69,12 @@ function Flower() {
             } else {
                 this.animation = false;
                 maploader.kerd = 0;
-                this.lathato = true;
+                this.visible = true;
             }
         }
 
-        if (abs(this.x - player.x) < 30 && abs(this.y - player.y) < 40 && this.lathato == true) {
-            this.lathato = false;
+        if (abs(this.x - player.x) < 30 && abs(this.y - player.y) < 40 && this.visible == true) {
+            this.visible = false;
             this.has_flower = true;
             points_animation.ai++;
             points_animation.x[points_animation.ai] = this.x;
@@ -85,7 +85,7 @@ function Flower() {
             graphics.point += points_animation.e[points_animation.ai];
         }
 
-        if (this.lathato == true) {
+        if (this.visible == true) {
             this.x -= this.speed_v2;
             image(this.sprites[0], this.x, this.y, this.player_width, this.player_height);
         }

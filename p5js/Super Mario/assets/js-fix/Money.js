@@ -8,8 +8,8 @@ function Money() {
     this.player_height = 35;
     this.sprites = [];
     this.forgas = 1;
-    this.zuhan = false;
-    this.lathato = false;
+    this.falling = false;
+    this.visible = false;
     this.yelvartmin = 0;
     this.yelvartmax = 0;
     this.sprites[1] = loadImage("assets/imgs/items/money_1.png");
@@ -29,8 +29,8 @@ function Money() {
             if (maploader.kerdi[maploader.kerd] == 1) {
                 graphics.point += 200;
                 graphics.erem += 1;
-                this.lathato = true;
-                this.zuhan = false;
+                this.visible = true;
+                this.falling = false;
             }
             maploader.kerd = 0;
         }
@@ -39,8 +39,8 @@ function Money() {
             if (maploader.kerdi[maploader.kerd] == 1) {
                 graphics.point += 200;
                 graphics.erem += 1;
-                this.lathato = true;
-                this.zuhan = false;
+                this.visible = true;
+                this.falling = false;
             }
             maploader.kerd = 0;
         }
@@ -49,14 +49,14 @@ function Money() {
             if (maploader.kerdi[maploader.kerd] == 1) {
                 graphics.point += 200;
                 graphics.erem += 1;
-                this.lathato = true;
-                this.zuhan = false;
+                this.visible = true;
+                this.falling = false;
             }
             maploader.kerd = 0;
         }
 
 
-        if (this.lathato == true) {
+        if (this.visible == true) {
             this.x -= this.speed_v2;
             image(this.sprites[0], this.x, this.y, this.player_width, this.player_height);
         }
@@ -90,19 +90,19 @@ function Money() {
             default:
         }
 
-        if (this.lathato == true) {
-            if (this.zuhan == false) {
+        if (this.visible == true) {
+            if (this.falling == false) {
                 if (this.y >= this.yelvartmin) {
                     this.y -= 5;
                 } else {
-                    this.zuhan = true;
+                    this.falling = true;
                 }
             } else {
                 if (this.y <= this.yelvartmax) {
                     this.y += 5;
                 } else {
-                    this.lathato = false;
-                    this.zuhan = false
+                    this.visible = false;
+                    this.falling = false
                     points_animation.ai++;
                     points_animation.x[points_animation.ai] = this.x;
                     points_animation.y[points_animation.ai] = this.y;

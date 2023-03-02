@@ -30,9 +30,9 @@ function Goomba() {
 
     this.ki = true;
     this.sprites = [];
-    this.sprites[1] = loadImage("assets/imgs/enemies/ellenseg_1_bal.png");
-    this.sprites[2] = loadImage("assets/imgs/enemies/ellenseg_1_jobb.png");
-    this.sprites[3] = loadImage("assets/imgs/enemies/ellenseg_1_halott.png");
+    this.sprites[1] = loadImage("assets/imgs/enemies/goomba_left.png");
+    this.sprites[2] = loadImage("assets/imgs/enemies/goomba_right.png");
+    this.sprites[3] = loadImage("assets/imgs/enemies/goomba_squash.png");
     this.sprites[0] = this.sprites[1];
 
     this.x[1] = 968;

@@ -8,7 +8,7 @@ function MapLoader() {
     this.ey = [];
     this.szt = [];
     this.kerdi = [];
-    this.anim = [];
+    this.animation = [];
 
     this.nx_1 = [];
     this.ny_1 = [];
@@ -36,16 +36,16 @@ function MapLoader() {
 
     this.speed_v2 = 0;
 
-    this.p_kcs = loadImage("assets/imgs/props/kcs.png");
-    this.p_kozcs = loadImage("assets/imgs/props/kozcs.png");
-    this.p_ncs = loadImage("assets/imgs/props/ncs.png");
-    this.p_kerd = loadImage("assets/imgs/props/kerd.png");
-    this.p_t = loadImage("assets/imgs/props/t.png");
-    this.p_l = loadImage("assets/imgs/props/l.png");
-    this.p_padlo = loadImage("assets/imgs/props/padlo.png");
-    this.p_kerdu = loadImage("assets/imgs/props/kerd_utve.png");
-    this.p_kerds = loadImage("assets/imgs/props/kerd_s.png");
-    this.ptt = loadImage("assets/imgs/props/tt.png");
+    this.pipe_1 = loadImage("assets/imgs/props/pipe_1.png");
+    this.pipe_2 = loadImage("assets/imgs/props/pipe_2.png");
+    this.pipe_3 = loadImage("assets/imgs/props/pipe_3.png");
+    this.mystery_block_1 = loadImage("assets/imgs/props/mystery_block_1.png");
+    this.brick = loadImage("assets/imgs/props/brick.png");
+    this.block = loadImage("assets/imgs/props/block.png");
+    this.ground = loadImage("assets/imgs/props/ground.png");
+    this.mystery_block_2 = loadImage("assets/imgs/props/mystery_block_2.png");
+    this.mystery_block_3 = loadImage("assets/imgs/props/mystery_block_3.png");
+    this.brick_small = loadImage("assets/imgs/props/brick_small.png");
 
     this.x[0] = 10;
     this.y[0] = 580;
@@ -746,7 +746,7 @@ function MapLoader() {
 
                                 } else {
                                     fireball.lat[j] = false;
-                                    fireball.anim[j] = true;
+                                    fireball.animation[j] = true;
                                     fireball.vx[j] = fireball.x[j];
                                     fireball.vy[j] = fireball.y[j];
                                     fireball.vm1[j] = 38 * 0.25;
@@ -882,7 +882,7 @@ function MapLoader() {
                                         this.nye_1[3] = this.ny_1[3];
                                         this.nxe_1[4] = this.nx_1[4];
                                         this.nye_1[4] = this.ny_1[4];
-                                        this.anim[1] = true;
+                                        this.animation[1] = true;
                                         this.t[1] = 0;
                                         this.nei[1] = i;
                                         break;
@@ -903,7 +903,7 @@ function MapLoader() {
                                         this.nye_2[3] = this.ny_2[3];
                                         this.nxe_2[4] = this.nx_2[4];
                                         this.nye_2[4] = this.ny_2[4];
-                                        this.anim[2] = true;
+                                        this.animation[2] = true;
                                         this.t[2] = 0;
                                         this.nei[2] = i;
                                         break;
@@ -924,7 +924,7 @@ function MapLoader() {
                                         this.nye_3[3] = this.ny_3[3];
                                         this.nxe_3[4] = this.nx_3[4];
                                         this.nye_3[4] = this.ny_3[4];
-                                        this.anim[3] = true;
+                                        this.animation[3] = true;
                                         this.t[3] = 0;
                                         this.nei[3] = i;
                                         break;
@@ -945,7 +945,7 @@ function MapLoader() {
                                         this.nye_4[3] = this.ny_4[3];
                                         this.nxe_4[4] = this.nx_4[4];
                                         this.nye_4[4] = this.ny_4[4];
-                                        this.anim[4] = true;
+                                        this.animation[4] = true;
                                         this.t[4] = 0;
                                         this.nei[4] = i;
                                         break;
@@ -974,7 +974,7 @@ function MapLoader() {
                     if (player.jump == true) {
                         if (jbo < fjo && jjo > fbo && jao > ffo && jfo - player.maxJumpSpeed < fao) {
                             if ((i >= 1050 && i <= 1081) || (i >= 1000 && i <= 1012)) {
-                                if (money.lathato == false) {
+                                if (money.visible == false) {
                                     this.tm[i] = true;
                                     this.ey[i] = this.y[i];
                                     this.kerdi[i]++;
@@ -1021,24 +1021,24 @@ function MapLoader() {
                     }
 
                     if (i >= 0 && i < 1000) {
-                        image(this.p_padlo, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
+                        image(this.ground, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
                     }
 
 
                     if (i >= 1300 && i <= 1302) {
-                        image(this.p_kcs, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
+                        image(this.pipe_1, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
                     }
 
                     if (i >= 1350 && i <= 1350) {
-                        image(this.p_kozcs, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
+                        image(this.pipe_2, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
                     }
 
                     if (i >= 1400 && i <= 1401) {
-                        image(this.p_ncs, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
+                        image(this.pipe_3, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
                     }
 
                     if (i >= 1100 && i <= 1198) {
-                        image(this.p_l, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
+                        image(this.block, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
                     }
 
                     if (i >= 1000 && i <= 1012) {
@@ -1053,19 +1053,19 @@ function MapLoader() {
                             }
 
                             if (this.kerdl == true) {
-                                image(this.p_kerd, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
+                                image(this.mystery_block_1, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
                             } else {
-                                image(this.p_kerds, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
+                                image(this.mystery_block_2, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
                             }
 
                         } else {
-                            image(this.p_kerdu, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
+                            image(this.mystery_block_3, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
                         }
                     }
 
                     if (i >= 1050 && i <= 1081) {
                         if (this.szt[i] == false) {
-                            image(this.p_t, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
+                            image(this.brick, this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
                         } else {
 
 
@@ -1078,7 +1078,7 @@ function MapLoader() {
             }
         }
 
-        if (this.anim[1] == true) {
+        if (this.animation[1] == true) {
             this.t[1] += 0.2;
 
             this.nxe_1[1] += this.speed_v2;
@@ -1097,18 +1097,18 @@ function MapLoader() {
 
 
 
-            image(this.ptt, this.nx_1[1], this.ny_1[1], 22, 22);
-            image(this.ptt, this.nx_1[2], this.ny_1[2], 22, 22);
-            image(this.ptt, this.nx_1[3], this.ny_1[3], 22, 22);
-            image(this.ptt, this.nx_1[4], this.ny_1[4], 22, 22);
+            image(this.brick_small, this.nx_1[1], this.ny_1[1], 22, 22);
+            image(this.brick_small, this.nx_1[2], this.ny_1[2], 22, 22);
+            image(this.brick_small, this.nx_1[3], this.ny_1[3], 22, 22);
+            image(this.brick_small, this.nx_1[4], this.ny_1[4], 22, 22);
             if (this.ny_1[1] > height + 50) {
-                this.anim[1] = false;
+                this.animation[1] = false;
                 this.t[1] = 0;
                 this.nei[1] = -1;
             }
         }
 
-        if (this.anim[2] == true) {
+        if (this.animation[2] == true) {
             this.t[2] += 0.2;
 
             this.nxe_2[1] += this.speed_v2;
@@ -1124,18 +1124,18 @@ function MapLoader() {
             this.ny_2[3] = this.nye_2[3] + 50 * this.t[2] * sin(260) + 9.81 / 2 * sq(this.t[2]);
             this.nx_2[4] = this.nxe_2[4] + 50 * this.t[2] * cos(280);
             this.ny_2[4] = this.nye_2[4] + 50 * this.t[2] * sin(280) + 9.81 / 2 * sq(this.t[2]);
-            image(this.ptt, this.nx_2[1], this.ny_2[1], 22, 22);
-            image(this.ptt, this.nx_2[2], this.ny_2[2], 22, 22);
-            image(this.ptt, this.nx_2[3], this.ny_2[3], 22, 22);
-            image(this.ptt, this.nx_2[4], this.ny_2[4], 22, 22);
+            image(this.brick_small, this.nx_2[1], this.ny_2[1], 22, 22);
+            image(this.brick_small, this.nx_2[2], this.ny_2[2], 22, 22);
+            image(this.brick_small, this.nx_2[3], this.ny_2[3], 22, 22);
+            image(this.brick_small, this.nx_2[4], this.ny_2[4], 22, 22);
             if (this.ny_2[1] > height + 50) {
-                this.anim[2] = false;
+                this.animation[2] = false;
                 this.t[2] = 0;
                 this.nei[2] = -1;
             }
         }
 
-        if (this.anim[3] == true) {
+        if (this.animation[3] == true) {
             this.t[3] += 0.2;
 
             this.nxe_3[1] += this.speed_v2;
@@ -1151,18 +1151,18 @@ function MapLoader() {
             this.ny_3[3] = this.nye_3[3] + 50 * this.t[3] * sin(260) + 9.81 / 2 * sq(this.t[3]);
             this.nx_3[4] = this.nxe_3[4] + 50 * this.t[3] * cos(280);
             this.ny_3[4] = this.nye_3[4] + 50 * this.t[3] * sin(280) + 9.81 / 2 * sq(this.t[3]);
-            image(this.ptt, this.nx_3[1], this.ny_3[1], 22, 22);
-            image(this.ptt, this.nx_3[2], this.ny_3[2], 22, 22);
-            image(this.ptt, this.nx_3[3], this.ny_3[3], 22, 22);
-            image(this.ptt, this.nx_3[4], this.ny_3[4], 22, 22);
+            image(this.brick_small, this.nx_3[1], this.ny_3[1], 22, 22);
+            image(this.brick_small, this.nx_3[2], this.ny_3[2], 22, 22);
+            image(this.brick_small, this.nx_3[3], this.ny_3[3], 22, 22);
+            image(this.brick_small, this.nx_3[4], this.ny_3[4], 22, 22);
             if (this.ny_3[1] > height + 50) {
-                this.anim[3] = false;
+                this.animation[3] = false;
                 this.t[3] = 0;
                 this.nei[3] = -1;
             }
         }
 
-        if (this.anim[4] == true) {
+        if (this.animation[4] == true) {
             this.t[4] += 0.2;
 
             this.nxe_4[1] += this.speed_v2;
@@ -1178,12 +1178,12 @@ function MapLoader() {
             this.ny_4[3] = this.nye_4[3] + 50 * this.t[4] * sin(260) + 9.81 / 2 * sq(this.t[4]);
             this.nx_4[4] = this.nxe_4[4] + 50 * this.t[4] * cos(280);
             this.ny_4[4] = this.nye_4[4] + 50 * this.t[4] * sin(280) + 9.81 / 2 * sq(this.t[4]);
-            image(this.ptt, this.nx_4[1], this.ny_4[1], 22, 22);
-            image(this.ptt, this.nx_4[2], this.ny_4[2], 22, 22);
-            image(this.ptt, this.nx_4[3], this.ny_4[3], 22, 22);
-            image(this.ptt, this.nx_4[4], this.ny_4[4], 22, 22);
+            image(this.brick_small, this.nx_4[1], this.ny_4[1], 22, 22);
+            image(this.brick_small, this.nx_4[2], this.ny_4[2], 22, 22);
+            image(this.brick_small, this.nx_4[3], this.ny_4[3], 22, 22);
+            image(this.brick_small, this.nx_4[4], this.ny_4[4], 22, 22);
             if (this.ny_4[1] > height + 50) {
-                this.anim[4] = false;
+                this.animation[4] = false;
                 this.t[4] = 0;
                 this.nei[4] = -1;
             }

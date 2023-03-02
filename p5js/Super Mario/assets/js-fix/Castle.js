@@ -7,9 +7,9 @@ function Castle() {
     this.vx = 9182
     this.vy = 452.5
     this.sprites = [];
-    this.sprites[0] = loadImage("assets/imgs/props/var.png");
-    this.sprites[1] = loadImage("assets/imgs/props/zaszlo.png");
-    this.sprites[2] = loadImage("assets/imgs/props/rud.png");
+    this.sprites[0] = loadImage("assets/imgs/props/castle.png");
+    this.sprites[1] = loadImage("assets/imgs/props/flag.png");
+    this.sprites[2] = loadImage("assets/imgs/props/pole.png");
     this.jv = false;
     this.elapsedMilliseconds = 0;
     this.av = false;

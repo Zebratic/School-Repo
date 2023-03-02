@@ -29,11 +29,11 @@ function Koopa() {
 
     this.ki = true;
     this.sprites = [];
-    this.sprites[1] = loadImage("assets/imgs/enemies/kacsa_teknos_1.png");
-    this.sprites[2] = loadImage("assets/imgs/enemies/kacsa_teknos_2.png");
-    this.sprites[3] = loadImage("assets/imgs/enemies/kacsa_teknos_3.png");
-    this.sprites[4] = loadImage("assets/imgs/enemies/kacsa_teknos_4.png");
-    this.sprites[5] = loadImage("assets/imgs/enemies/kacsa_teknos_5.png");
+    this.sprites[1] = loadImage("assets/imgs/enemies/koopa_left_1.png");
+    this.sprites[2] = loadImage("assets/imgs/enemies/koopa_left_2.png");
+    this.sprites[3] = loadImage("assets/imgs/enemies/koopa_closed.png");
+    this.sprites[4] = loadImage("assets/imgs/enemies/koopa_right_1.png");
+    this.sprites[5] = loadImage("assets/imgs/enemies/koopa_right_2.png");
     this.sprites[0] = this.sprites[1];
 
     this.x[1] = 4770;
