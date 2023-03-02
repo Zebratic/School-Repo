@@ -1,147 +1,147 @@
-var jatekos;
-var talaj_fal;
-var grafika;
-var money
-var gomba;
-var loves;
-var pont_animacio;
-var kilott_ellen_anim;
-var mozgasv;
+var player;
+var maploader;
+var graphics;
+var money;
+var mushroom;
+var fireball;
+var points_animation;
+var squash_animation;
+var movement;
 
 function setup() {
-  createCanvas(705, 607.5);
-  jatekos = new Jatekos();
-  talaj_fal = new Talaj_fal();
-  grafika = new Grafika();
-  penz = new Penz();
-  gomba = new Gomba();
-  virag = new Virag();
-  ellenseg_gomba = new Ellenseg_gomba();
-  ellenseg_kacsa = new Ellenseg_kacsa();
-  loves = new Loves();
-  pont_animacio = new Pont_animacio();
-  kilott_ellen_anim = new Kilott_ellen_anim();
-  palya_vege = new Palya_vege();
-  mozgasv = new Mozgasv();
+    createCanvas(705, 607.5);
+    player = new Player();
+    maploader = new MapLoader();
+    graphics = new Graphics();
+    money = new Money();
+    mushroom = new Mushroom();
+    flower = new Flower();
+    goomba = new Goomba();
+    koopa = new Koopa();
+    fireball = new Fireball();
+    points_animation = new Points_Animation();
+    squash_animation = new Squash_Animation();
+    castle = new Castle();
+    movement = new Movement();
 
-  loves.i = "j";
-  textFont('monospace')
-  angleMode(DEGREES);
-  rectMode(CENTER);
-  imageMode(CENTER);
+    fireball.i = "j";
+    textFont('monospace')
+    angleMode(DEGREES);
+    rectMode(CENTER);
+    imageMode(CENTER);
 
-  mozgasv.funkcio();
+    movement.update();
 
-  for (let j = 0; j <= 2700 - 1; j++) {
+    for (let j = 0; j <= 2700 - 1; j++) {
 
-    // palya_vege.rx -= jatekos.sebesseg_v2;
-    //  palya_vege.zx -= jatekos.sebesseg_v2;
-    //  palya_vege.vx -= jatekos.sebesseg_v2;
+        // castle.rx -= player.speed_v2;
+        //  castle.zx -= player.speed_v2;
+        //  castle.vx -= player.speed_v2;
 
-    for (let i = 0; i <= talaj_fal.x.length - 1; i++) {
-      if (i >= 0 && i <= 230 || i >= 1000 && i <= 1012 || i >= 1050 && i <= 1081 || i >= 1100 && i <= 1198 || i >= 1300 && i <= 1302 || i >= 1350 && i <= 1350 || i >= 1400 && i <= 1401) {
-        //   talaj_fal.x[i] -= jatekos.sebesseg_v2;
-      }
+        for (let i = 0; i <= maploader.x.length - 1; i++) {
+            if (i >= 0 && i <= 230 || i >= 1000 && i <= 1012 || i >= 1050 && i <= 1081 || i >= 1100 && i <= 1198 || i >= 1300 && i <= 1302 || i >= 1350 && i <= 1350 || i >= 1400 && i <= 1401) {
+                //   maploader.x[i] -= player.speed_v2;
+            }
+        }
     }
-  }
 
 }
 
 function draw() {
-  background(92, 136, 252);
-  grafika.kfmegjelenites();
-  palya_vege.megjelenites();
+    background(92, 136, 252);
+    graphics.render();
+    castle.update();
 
-  if (jatekos.gomba_ == 0) {
-    gomba.megjelenites();
-  }
+    if (player.mushroom == 0) {
+        mushroom.update();
+    }
 
-  if (jatekos.gomba_ > 0 || virag.lathato == true) {
-    virag.megjelenites();
-  }
+    if (player.mushroom > 0 || flower.lathato == true) {
+        flower.update();
+    }
 
-  if (virag.felvett_virag == true) {
-    loves.megjelenites();
-  }
+    if (flower.has_flower == true) {
+        fireball.update();
+    }
 
-  if (jatekos.halal == false && palya_vege.vx - jatekos.x > 5) {
-    jatekos.megjelenites();
-  }
+    if (player.dead == false && castle.vx - player.x > 5) {
+        player.update();
+    }
 
-  talaj_fal.megjelenites();
-  penz.megjelenites();
-  ellenseg_gomba.megjelenites();
-  ellenseg_kacsa.megjelenites();
-  pont_animacio.megjelenites();
-  kilott_ellen_anim.megjelenites();
-  jatekos.meghal();
+    maploader.update();
+    money.update();
+    goomba.update();
+    koopa.update();
+    points_animation.update();
+    squash_animation.update();
+    player.dies();
 
-  mozgasv.funkcio();
-    
+    movement.update();
+
 }
 
 function keyPressed() {
 
-  if (palya_vege.mt == false) {
-    if ((key == "a" || key == "A" || keyCode == "37") && jatekos.guggolas == false) {
-      jatekos.balra = true;
-      loves.i = "b";
-    }
+    if (castle.mt == false) {
+        if ((key == "a" || key == "A" || keyCode == "37") && player.crouch == false) {
+            player.moveLeft = true;
+            fireball.i = "b";
+        }
 
-    if ((key == "d" || key == "D" || keyCode == "39") && jatekos.guggolas == false) {
-      jatekos.jobbra = true;
-      loves.i = "j";
-    }
+        if ((key == "d" || key == "D" || keyCode == "39") && player.crouch == false) {
+            player.moveRight = true;
+            fireball.i = "j";
+        }
 
-    if (key == "s" || key == "S" || keyCode == "40") {
-      jatekos.guggolas = true;
-    }
+        if (key == "s" || key == "S" || keyCode == "40") {
+            player.crouch = true;
+        }
 
-    if (key == "w" || key == "W" || keyCode == "38") {
-      if (jatekos.zuhanas == false) {
-        jatekos.ugras = true;
-      }
-    }
+        if (key == "w" || key == "W" || keyCode == "38") {
+            if (player.falling == false) {
+                player.jump = true;
+            }
+        }
 
-    if (key == "f" || key == "F") {
-      loves.e = true;
-    }
+        if (key == "f" || key == "F") {
+            fireball.e = true;
+        }
 
-    if (key == "Shift") {
-      jatekos.fut = true;
-    }
+        if (key == "Shift") {
+            player.run = true;
+        }
 
-  }
+    }
 }
 
 function keyReleased() {
 
-  if (key == "a" || key == "A" || keyCode == "37") {
-    jatekos.balra = false;
-  }
+    if (key == "a" || key == "A" || keyCode == "37") {
+        player.moveLeft = false;
+    }
 
-  if (key == "d" || key == "D" || keyCode == "39") {
-    jatekos.jobbra = false;
-  }
+    if (key == "d" || key == "D" || keyCode == "39") {
+        player.moveRight = false;
+    }
 
-  if (key == "s" || key == "S" || keyCode == "40") {
-    jatekos.guggolas = false;
-  }
+    if (key == "s" || key == "S" || keyCode == "40") {
+        player.crouch = false;
+    }
 
-  if (key == "f" || key == "F") {
-    loves.e = false;
-  }
-  if (key == "Shift") {
-    jatekos.fut = false;
-  }
+    if (key == "f" || key == "F") {
+        fireball.e = false;
+    }
+    if (key == "Shift") {
+        player.run = false;
+    }
 
-  key = "";
+    key = "";
 
 }
 
 function mousePressed() {
-  jatekos.x = mouseX;
-  jatekos.y = mouseY;
-  print(mouseX);
-  print(mouseY);
+    player.x = mouseX;
+    player.y = mouseY;
+    print(mouseX);
+    print(mouseY);
 }

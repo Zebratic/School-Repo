@@ -2,10 +2,10 @@ function Ellenseg_kacsa() {
 
   this.x = [];
   this.y = [];
-  this.em = [];
-  this.zuhanas = [];
-  this.balra = [];
-  this.jobbra = [];
+  this.bottom = [];
+  this.falling = [];
+  this.moveLeft = [];
+  this.moveRight = [];
   this.tiltasb = [];
   this.tiltasj = [];
   this.indul = [];
@@ -18,30 +18,30 @@ function Ellenseg_kacsa() {
   this.vhms = [];
   this.vhmi = [];
   this.kv = [];
-  this.m1 = 39;
-  this.m2 = 57;
+  this.player_width = 39;
+  this.player_height = 57;
   this.sebesseg_v2 = [];
 
-  this.msebesseg = 1;
-  this.zsebesseg = 5;
+  this.moveSpeed = 1;
+  this.jumpSpeed = 5;
 
-  this.millis_ = 0;
+  this.elapsedMilliseconds = 0;
 
   this.ki = true;
-  this.kep = [];
-  this.kep[1] = loadImage("assets/imgs/enemies/kacsa_teknos_1.png");
-  this.kep[2] = loadImage("assets/imgs/enemies/kacsa_teknos_2.png");
-  this.kep[3] = loadImage("assets/imgs/enemies/kacsa_teknos_3.png");
-  this.kep[4] = loadImage("assets/imgs/enemies/kacsa_teknos_4.png");
-  this.kep[5] = loadImage("assets/imgs/enemies/kacsa_teknos_5.png");
-  this.kep[0] = this.kep[1];
+  this.sprites = [];
+  this.sprites[1] = loadImage("assets/imgs/enemies/kacsa_teknos_1.png");
+  this.sprites[2] = loadImage("assets/imgs/enemies/kacsa_teknos_2.png");
+  this.sprites[3] = loadImage("assets/imgs/enemies/kacsa_teknos_3.png");
+  this.sprites[4] = loadImage("assets/imgs/enemies/kacsa_teknos_4.png");
+  this.sprites[5] = loadImage("assets/imgs/enemies/kacsa_teknos_5.png");
+  this.sprites[0] = this.sprites[1];
 
   this.x[1] = 4770;
   this.y[1] = 520;
-  this.em[1] = 0;
-  this.zuhanas[1] = true;
-  this.balra[1] = true;
-  this.jobbra[1] = false;
+  this.bottom[1] = 0;
+  this.falling[1] = true;
+  this.moveLeft[1] = true;
+  this.moveRight[1] = false;
   this.tiltasb[1] = false;
   this.tiltasj[1] = false;
   this.indul[1] = false;
@@ -54,37 +54,37 @@ function Ellenseg_kacsa() {
   this.vhmi[1] = "s"
   this.kv[1] = false;
 
-  this.megjelenites = function() {
+  this.update = function() {
 
     for (var i = 1; i <= this.x.length - 1; i++) {
       if (this.kv[i] == false) {
-        if (this.millis_ <= millis()) {
-          this.millis_ = millis() + 150;
+        if (this.elapsedMilliseconds <= millis()) {
+          this.elapsedMilliseconds = millis() + 150;
           if (this.ki == true) {
             this.ki = false;
-            if (this.balra[i] == true) {
-              this.kep[0] = this.kep[1];
+            if (this.moveLeft[i] == true) {
+              this.sprites[0] = this.sprites[1];
             }
-            if (this.jobbra[i] == true) {
-              this.kep[0] = this.kep[4];
+            if (this.moveRight[i] == true) {
+              this.sprites[0] = this.sprites[4];
             }
           } else {
             this.ki = true;
-            if (this.balra[i] == true) {
-              this.kep[0] = this.kep[2];
+            if (this.moveLeft[i] == true) {
+              this.sprites[0] = this.sprites[2];
             }
-            if (this.jobbra[i] == true) {
-              this.kep[0] = this.kep[5];
+            if (this.moveRight[i] == true) {
+              this.sprites[0] = this.sprites[5];
             }
           }
         }
 
 
         if (abs(this.x[i] - jatekos.x) < 3000 && abs(this.y[i] - jatekos.y) < 800) {
-          let akbo = this.x[i] - this.m1 / 2;
-          let akjo = this.x[i] + this.m1 / 2;
-          let akfo = this.y[i] - this.m2 / 2;
-          let akao = this.y[i] + this.m2 / 2;
+          let akbo = this.x[i] - this.player_width / 2;
+          let akjo = this.x[i] + this.player_width / 2;
+          let akfo = this.y[i] - this.player_height / 2;
+          let akao = this.y[i] + this.player_height / 2;
 
           for (var j = 1; j <= ellenseg_gomba.x.length - 1; j++) {
             if (abs(ellenseg_gomba.x[j] - this.x[i]) < 20 && abs(ellenseg_gomba.y[j] - this.y[i]) < 20) {
@@ -118,14 +118,14 @@ function Ellenseg_kacsa() {
 
           for (var j = 1; j <= this.x.length - 1; j++) {
 
-            let okbo = this.x[j] - this.m1 / 2;
-            let okjo = this.x[j] + this.m1 / 2;
-            let okfo = this.y[j] - this.m2 / 2;
-            let okao = this.y[j] + this.m2 / 2;
+            let okbo = this.x[j] - this.player_width / 2;
+            let okjo = this.x[j] + this.player_width / 2;
+            let okfo = this.y[j] - this.player_height / 2;
+            let okao = this.y[j] + this.player_height / 2;
 
             if (j != i) {
-              if (akbo - this.msebesseg < okjo + this.sebesseg_v2[i] && akjo + this.msebesseg > okbo - this.sebesseg_v2[i]) {
-                if (this.jobbra[i] == true) {
+              if (akbo - this.moveSpeed < okjo + this.sebesseg_v2[i] && akjo + this.moveSpeed > okbo - this.sebesseg_v2[i]) {
+                if (this.moveRight[i] == true) {
                   this.tiltasj[i] = true;
                 } else {
                   this.tiltasb[i] = true
@@ -137,44 +137,44 @@ function Ellenseg_kacsa() {
 
           if (this.indul[i] == true) {
             if (this.tiltasj[i] == true) {
-              this.balra[i] = true;
-              this.jobbra[i] = false;
+              this.moveLeft[i] = true;
+              this.moveRight[i] = false;
               this.tiltasj[i] = false;
             }
 
             if (this.tiltasb[i] == true) {
-              this.balra[i] = false;
-              this.jobbra[i] = true;
+              this.moveLeft[i] = false;
+              this.moveRight[i] = true;
               this.tiltasb[i] = false
             }
 
-            if (this.balra[i] == true && this.tiltasb[i] == false && this.vh[i] == false && this.halott[i] == false) {
+            if (this.moveLeft[i] == true && this.tiltasb[i] == false && this.vh[i] == false && this.halott[i] == false) {
               this.x[i] -= this.sebesseg_v2[i];
             }
 
-            if (this.jobbra[i] == true && this.tiltasj[i] == false && this.vh[i] == false && this.halott[i] == false) {
+            if (this.moveRight[i] == true && this.tiltasj[i] == false && this.vh[i] == false && this.halott[i] == false) {
               this.x[i] += this.sebesseg_v2[i];
             }
 
-            if (this.y[i] + this.zsebesseg + this.m2 / 2 <= this.em[i]) {
-              this.y[i] += this.zsebesseg
-              this.zuhanas[i] = true;
+            if (this.y[i] + this.jumpSpeed + this.player_height / 2 <= this.bottom[i]) {
+              this.y[i] += this.jumpSpeed
+              this.falling[i] = true;
             }
 
-            if (this.em[i] - this.y[i] - this.m2 / 2 <= this.zsebesseg) {
-              this.y[i] = this.em[i] - this.m2 / 2
-              this.zuhanas[i] = false;
+            if (this.bottom[i] - this.y[i] - this.player_height / 2 <= this.jumpSpeed) {
+              this.y[i] = this.bottom[i] - this.player_height / 2
+              this.falling[i] = false;
             }
           }
 
-          if (akbo < jatekos.x + jatekos.m1 / 2 && akjo > jatekos.x - jatekos.m1 / 2) {
+          if (akbo < jatekos.x + jatekos.player_width / 2 && akjo > jatekos.x - jatekos.player_width / 2) {
 
             if (abs(jatekos.y - this.y[i]) < 20 && this.uei[i] == 1) {
               this.vh[1] = true;
               this.uei[i] = 2;
             }
 
-            if (jatekos.y < akfo && jatekos.y + jatekos.m2 / 2 > akfo && jatekos.ugras == false) {
+            if (jatekos.y < akfo && jatekos.y + jatekos.player_height / 2 > akfo && jatekos.jump == false) {
 
               if (this.uei[i] > 1) {
                 this.vhmi[i] = "s";
@@ -184,8 +184,8 @@ function Ellenseg_kacsa() {
               }
 
               if (this.halott[i] == false || this.ue[1] == false) {
-                jatekos.ugras = true;
-                jatekos.lmugras = 200;
+                jatekos.jump = true;
+                jatekos.lastJump = 200;
                 this.halott[i] = true;
                 if (this.uei[i] == 0) {
                   this.y[i] += 11;
@@ -210,12 +210,12 @@ function Ellenseg_kacsa() {
 
           if (this.halott[i] == false) {
             this.ue[1] = false;
-            this.m1 = 39;
-            this.m2 = 57;
-            image(this.kep[0], this.x[i], this.y[i], this.m1, this.m2);
+            this.player_width = 39;
+            this.player_height = 57;
+            image(this.sprites[0], this.x[i], this.y[i], this.player_width, this.player_height);
           } else {
-            this.m1 = 39;
-            this.m2 = 34;
+            this.player_width = 39;
+            this.player_height = 34;
             this.indul[i] = false;
             if (this.uei[i] > 1) {
               this.indul[i] = true;
@@ -245,7 +245,7 @@ function Ellenseg_kacsa() {
 
             }
             if (this.halotti[i] > millis() || this.vh[i] == true) {
-              image(this.kep[3], this.x[i], this.y[i], this.m1, this.m2);
+              image(this.sprites[3], this.x[i], this.y[i], this.player_width, this.player_height);
             } else {
               this.indul[i] = true;
               if (this.vh[i] == false) {
@@ -255,16 +255,16 @@ function Ellenseg_kacsa() {
               this.ue[i] = true;
               this.uei[i] = 0;
 
-              if (this.balra[i] == true) {
-                this.kep[0] = this.kep[4];
-                this.balra[i] = false;
-                this.jobbra[i] = true;
+              if (this.moveLeft[i] == true) {
+                this.sprites[0] = this.sprites[4];
+                this.moveLeft[i] = false;
+                this.moveRight[i] = true;
                 this.tiltasj[i] = false;
                 this.tiltasb[i] = false;
               } else {
-                this.kep[0] = this.kep[1];
-                this.balra[i] = true;
-                this.jobbra[i] = false;
+                this.sprites[0] = this.sprites[1];
+                this.moveLeft[i] = true;
+                this.moveRight[i] = false;
                 this.tiltasj[i] = false;
                 this.tiltasb[i] = false;
               }

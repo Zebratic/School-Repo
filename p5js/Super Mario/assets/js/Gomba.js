@@ -2,19 +2,19 @@ function Gomba() {
 
   this.x = 219;
   this.y = 269;
-  this.m1 = 43;
-  this.m2 = 43;
+  this.player_width = 43;
+  this.player_height = 43;
 
-  this.balra = false;
-  this.jobbra = true;
+  this.moveLeft = false;
+  this.moveRight = true;
 
-  this.zuhanas = false;
+  this.falling = false;
 
-  this.msebesseg = 3;
-  this.zsebesseg = 5;
-  this.usebesseg = 5;
-  this.ugrasi = 0;
-  this.kep = loadImage("assets/imgs/items/gomba.png");
+  this.moveSpeed = 3;
+  this.jumpSpeed = 5;
+  this.maxJumpSpeed = 5;
+  this.jumpCounter = 0;
+  this.sprites = loadImage("assets/imgs/items/gomba.png");
 
   this.tiltasb = false;
   this.tiltasj = false;
@@ -25,7 +25,7 @@ function Gomba() {
 
   this.sebesseg_v2 = 0;
 
-  this.megjelenites = function() {
+  this.update = function() {
 
     if (this.gba != talaj_fal.kerd && talaj_fal.kerd != 0 && (talaj_fal.kerd == 1006 || talaj_fal.kerd == 1008)) {
       this.gba = talaj_fal.kerd;
@@ -48,8 +48,8 @@ function Gomba() {
     }
 
     if (this.animation == true) {
-      image(this.kep, this.x, this.y, this.m1, this.m2);
-      if (this.y >= talaj_fal.y[this.gb] - talaj_fal.m2[this.gb]) {
+      image(this.sprites, this.x, this.y, this.player_width, this.player_height);
+      if (this.y >= talaj_fal.y[this.gb] - talaj_fal.player_height[this.gb]) {
         this.y--;
       } else {
 
@@ -62,7 +62,7 @@ function Gomba() {
 
     if (abs(this.x - jatekos.x) < 30 && abs(this.y - jatekos.y) < 30 && this.lathato == true) {
       this.lathato = false;
-      jatekos.gomba_++;
+      jatekos.mushroom++;
       pont_animacio.ai++;
       pont_animacio.x[pont_animacio.ai] = this.x;
       pont_animacio.y[pont_animacio.ai] = this.y;
@@ -74,38 +74,38 @@ function Gomba() {
 
     if (this.lathato == true) {
       if (this.tiltasj == true) {
-        this.balra = true;
-        this.jobbra = false;
+        this.moveLeft = true;
+        this.moveRight = false;
         this.tiltasj = false;
       }
 
       if (this.tiltasb == true) {
-        this.balra = false;
-        this.jobbra = true;
+        this.moveLeft = false;
+        this.moveRight = true;
         this.tiltasb = false;
       }
 
-      if (this.balra == true && this.tiltasb == false) {
+      if (this.moveLeft == true && this.tiltasb == false) {
         this.x -= this.sebesseg_v2;
       }
 
-      if (this.jobbra == true && this.tiltasj == false) {
+      if (this.moveRight == true && this.tiltasj == false) {
         this.x += this.sebesseg_v2;
       }
 
-      if (this.y + this.zsebesseg + this.m2 / 2 <= this.em) {
-        this.y += this.zsebesseg
-        this.zuhanas = true;
-        this.msebesseg = this.sebesseg_v2;
+      if (this.y + this.jumpSpeed + this.player_height / 2 <= this.bottom) {
+        this.y += this.jumpSpeed
+        this.falling = true;
+        this.moveSpeed = this.sebesseg_v2;
       }
 
-      if (this.em - this.y - this.m2 / 2 <= this.zsebesseg) {
-        this.y = this.em - this.m2 / 2
-        this.zuhanas = false;
-        this.msebesseg = this.sebesseg_v2;
+      if (this.bottom - this.y - this.player_height / 2 <= this.jumpSpeed) {
+        this.y = this.bottom - this.player_height / 2
+        this.falling = false;
+        this.moveSpeed = this.sebesseg_v2;
       }
 
-      image(this.kep, this.x, this.y, this.m1, this.m2);
+      image(this.sprites, this.x, this.y, this.player_width, this.player_height);
 
     }
 

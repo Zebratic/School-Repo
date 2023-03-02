@@ -2,8 +2,8 @@ function Loves() {
 
   this.x = [];
   this.y = [];
-  this.m1 = [];
-  this.m2 = [];
+  this.player_width = [];
+  this.player_height = [];
   this.sz = [];
   this.xe = [];
   this.ye = [];
@@ -15,37 +15,37 @@ function Loves() {
   this.vm1 = [];
   this.vm2 = [];
   this.te = [];
-  this.millis_ = 0;
+  this.elapsedMilliseconds = 0;
   this.e = false;
 
-  this.kep = [];
+  this.sprites = [];
 
-  this.kep[1] = loadImage("assets/imgs/props/tuzgolyo_1.png");
-  this.kep[2] = loadImage("assets/imgs/props/tuzgolyo_2.png");
+  this.sprites[1] = loadImage("assets/imgs/props/tuzgolyo_1.png");
+  this.sprites[2] = loadImage("assets/imgs/props/tuzgolyo_2.png");
   this.l = -1;
   this.i = "j";
   this.te[1] = false;
   this.te[2] = false;
 
-  this.millis_ = 0;
+  this.elapsedMilliseconds = 0;
   this.i = 0;
 
-  this.megjelenites = function() {
+  this.update = function() {
 
-    if (this.e == true && this.millis_ <= millis() && jatekos.guggolas == false) {
+    if (this.e == true && this.elapsedMilliseconds <= millis() && jatekos.crouch == false) {
 
-      if (this.millis_ <= millis()) {
+      if (this.elapsedMilliseconds <= millis()) {
         if (this.l == 10) {
           this.l = -1;
         }
         this.l += 2;
-        this.millis_ = millis() + 500;
+        this.elapsedMilliseconds = millis() + 500;
       }
 
-      this.m1[this.l] = 19;
-      this.m2[this.l] = 19;
-      this.m1[this.l + 1] = 19;
-      this.m2[this.l + 1] = 19;
+      this.player_width[this.l] = 19;
+      this.player_height[this.l] = 19;
+      this.player_width[this.l + 1] = 19;
+      this.player_height[this.l + 1] = 19;
 
       this.te[this.l] = false;
       this.te[this.l + 1] = false;
@@ -102,7 +102,7 @@ function Loves() {
         this.x[i] = this.xe[i] + 60 * this.t[i] * cos(this.sz[i]);
         this.y[i] = this.ye[i] + 60 * this.t[i] * sin(this.sz[i]) + 9.81 / 2 * sq(this.t[i]);
 
-        image(this.kep[1], this.x[i], this.y[i], this.m1[i], this.m2[i]);
+        image(this.sprites[1], this.x[i], this.y[i], this.player_width[i], this.player_height[i]);
 
         if (abs(jatekos.x - this.x[i]) > 1500) {
           this.lat[i] = false;
@@ -171,7 +171,7 @@ function Loves() {
 
       } else {
         if (this.anim[i] == true) {
-          image(this.kep[2], this.vx[i], this.vy[i], this.vm1[i], this.vm2[i]);
+          image(this.sprites[2], this.vx[i], this.vy[i], this.vm1[i], this.vm2[i]);
           this.vm1[i] *= 1.2;
           this.vm2[i] *= 1.2;
           if (this.vm1[i] >= 38) {

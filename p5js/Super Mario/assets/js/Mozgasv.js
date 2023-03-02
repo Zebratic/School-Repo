@@ -9,29 +9,29 @@ function Mozgasv() {
 
     if (jatekos.x >= 300) {
       jatekos.sebesseg_v2 = 4;
-      jatekos.msebesseg = 0;
+      jatekos.moveSpeed = 0;
     } else {
       jatekos.sebesseg_v2 = 0;
-      if (jatekos.jobbra == true && talaj_fal.tiltasj == false) {
-        jatekos.msebesseg = 4;
+      if (jatekos.moveRight == true && talaj_fal.tiltasj == false) {
+        jatekos.moveSpeed = 4;
       }
-      if (jatekos.x < jatekos.m1 / 2) {
+      if (jatekos.x < jatekos.player_width / 2) {
         talaj_fal.tiltasb = true;
       }
-      if (jatekos.balra == true && talaj_fal.tiltasb == false) {
-        jatekos.msebesseg = 0;
+      if (jatekos.moveLeft == true && talaj_fal.tiltasb == false) {
+        jatekos.moveSpeed = 0;
       }
     }
 
     for (let i = 0; i <= talaj_fal.x.length - 1; i++) {
       if (i >= 0 && i <= 230 || i >= 1000 && i <= 1012 || i >= 1050 && i <= 1081 || i >= 1100 && i <= 1198 || i >= 1300 && i <= 1302 || i >= 1350 && i <= 1350 || i >= 1400 && i <= 1401) {
-        if (jatekos.jobbra == true && talaj_fal.tiltasj == false && jatekos.halal == false) {
+        if (jatekos.moveRight == true && talaj_fal.tiltasj == false && jatekos.dead == false) {
           talaj_fal.x[i] -= jatekos.sebesseg_v2;
         }
       }
     }
 
-    if (jatekos.jobbra == true && talaj_fal.tiltasj == false && jatekos.halal == false) {
+    if (jatekos.moveRight == true && talaj_fal.tiltasj == false && jatekos.dead == false) {
       for (let i = 0; i <= grafika.kfx.length - 1; i++) {
         grafika.kfx[i] -= jatekos.sebesseg_v2;
       }
@@ -65,17 +65,17 @@ function Mozgasv() {
       }
     }
 
-    if (jatekos.jobbra == true && talaj_fal.tiltasj == false) {
+    if (jatekos.moveRight == true && talaj_fal.tiltasj == false) {
       talaj_fal.sebesseg_v2 = -jatekos.sebesseg_v2
     } else {
       talaj_fal.sebesseg_v2 = 0;
     }
 
-    if (jatekos.jobbra == true && talaj_fal.tiltasj == false) {
-      if (gomba.balra == true && gomba.tiltasb == false) {
+    if (jatekos.moveRight == true && talaj_fal.tiltasj == false) {
+      if (gomba.moveLeft == true && gomba.tiltasb == false) {
         gomba.sebesseg_v2 = jatekos.sebesseg_v2 + 3;
       }
-      if (gomba.jobbra == true && gomba.tiltasj == false) {
+      if (gomba.moveRight == true && gomba.tiltasj == false) {
         gomba.sebesseg_v2 = (jatekos.sebesseg_v2 - 3) * -1;
       }
 
@@ -87,7 +87,7 @@ function Mozgasv() {
       gomba.sebesseg_v2 = 3;
     }
 
-    if (jatekos.jobbra == true && talaj_fal.tiltasj == false) {
+    if (jatekos.moveRight == true && talaj_fal.tiltasj == false) {
       if (penz.lathato == true) {
         penz.sebesseg_v2 = jatekos.sebesseg_v2;
       }
@@ -95,22 +95,22 @@ function Mozgasv() {
       penz.sebesseg_v2 = 0;
     }
 
-    if (jatekos.jobbra == true && talaj_fal.tiltasj == false && jatekos.halal == false) {
-      if (virag.lathato == true || virag.animation == true) {
-        virag.sebesseg_v2 = jatekos.sebesseg_v2;
+    if (jatekos.moveRight == true && talaj_fal.tiltasj == false && jatekos.dead == false) {
+      if (flower.lathato == true || flower.animation == true) {
+        flower.sebesseg_v2 = jatekos.sebesseg_v2;
       }
     } else {
-      virag.sebesseg_v2 = 0;
+      flower.sebesseg_v2 = 0;
     }
 
-    if (jatekos.jobbra == true && talaj_fal.tiltasj == false && jatekos.halal == false) {
+    if (jatekos.moveRight == true && talaj_fal.tiltasj == false && jatekos.dead == false) {
       palya_vege.rx -= jatekos.sebesseg_v2;
       palya_vege.zx -= jatekos.sebesseg_v2;
       palya_vege.vx -= jatekos.sebesseg_v2;
     }
 
     for (var i = 1; i <= ellenseg_gomba.x.length - 1; i++) {
-      if (jatekos.jobbra == true && talaj_fal.tiltasj == false && ellenseg_gomba.indul[i] == false && jatekos.halal == false) {
+      if (jatekos.moveRight == true && talaj_fal.tiltasj == false && ellenseg_gomba.indul[i] == false && jatekos.dead == false) {
         ellenseg_gomba.x[i] -= jatekos.sebesseg_v2;
         ellenseg_gomba.sebesseg_v2[i] = 0;
 
@@ -160,12 +160,12 @@ function Mozgasv() {
       } else {
         if (ellenseg_gomba.x[i] > -400) {
 
-          if (jatekos.jobbra == true && talaj_fal.tiltasj == false && jatekos.halal == false) {
+          if (jatekos.moveRight == true && talaj_fal.tiltasj == false && jatekos.dead == false) {
 
-            if (ellenseg_gomba.balra[i] == true && ellenseg_gomba.tiltasb[i] == false && ellenseg_gomba.halott[i] == false) {
+            if (ellenseg_gomba.moveLeft[i] == true && ellenseg_gomba.tiltasb[i] == false && ellenseg_gomba.halott[i] == false) {
               ellenseg_gomba.sebesseg_v2[i] = jatekos.sebesseg_v2 + 2;
             }
-            if (ellenseg_gomba.jobbra[i] == true && ellenseg_gomba.tiltasj[i] == false && ellenseg_gomba.halott[i] == false) {
+            if (ellenseg_gomba.moveRight[i] == true && ellenseg_gomba.tiltasj[i] == false && ellenseg_gomba.halott[i] == false) {
               ellenseg_gomba.sebesseg_v2[i] = (jatekos.sebesseg_v2 - 2) * -1;
             }
           } else {
@@ -180,7 +180,7 @@ function Mozgasv() {
     }
 
     for (var i = 1; i <= ellenseg_kacsa.x.length - 1; i++) {
-      if (jatekos.jobbra == true && talaj_fal.tiltasj == false && ellenseg_kacsa.indul[i] == false && jatekos.halal == false) {
+      if (jatekos.moveRight == true && talaj_fal.tiltasj == false && ellenseg_kacsa.indul[i] == false && jatekos.dead == false) {
         ellenseg_kacsa.x[i] -= jatekos.sebesseg_v2;
         ellenseg_kacsa.sebesseg_v2[i] = 0;
 
@@ -191,15 +191,15 @@ function Mozgasv() {
       } else {
         if (ellenseg_kacsa.x[i] > -400) {
 
-          if (jatekos.jobbra == true && talaj_fal.tiltasj == false && jatekos.halal == false) {
+          if (jatekos.moveRight == true && talaj_fal.tiltasj == false && jatekos.dead == false) {
 
             if (ellenseg_kacsa.vhmi[i] == "s") {
               ellenseg_kacsa.sebesseg_v2[1] = 2;
 
-              if (ellenseg_kacsa.balra[i] == true && ellenseg_kacsa.tiltasb[i] == false) {
+              if (ellenseg_kacsa.moveLeft[i] == true && ellenseg_kacsa.tiltasb[i] == false) {
                 ellenseg_kacsa.sebesseg_v2[i] = jatekos.sebesseg_v2 + 2;
               }
-              if (ellenseg_kacsa.jobbra[i] == true && ellenseg_kacsa.tiltasj[i] == false) {
+              if (ellenseg_kacsa.moveRight[i] == true && ellenseg_kacsa.tiltasj[i] == false) {
                 ellenseg_kacsa.sebesseg_v2[i] = (jatekos.sebesseg_v2 - 2) * -1;
               }
             } else {

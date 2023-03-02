@@ -8,7 +8,7 @@ function Pont_animacio() {
 
   this.ai = 0;
 
-  this.megjelenites = function() {
+  this.update = function() {
 
     for (var i = 0; i <= this.ai; i++) {
       if (this.l[i] == true) {
@@ -16,7 +16,7 @@ function Pont_animacio() {
           fill(255);
           textSize(25);
 
-          if (jatekos.jobbra == true && talaj_fal.tiltasj == false && jatekos.halal == false) {
+          if (jatekos.moveRight == true && talaj_fal.tiltasj == false && jatekos.dead == false) {
             this.x[i] -= jatekos.sebesseg_v2;
           }
 

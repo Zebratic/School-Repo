@@ -2,16 +2,16 @@ function Virag() {
 
   this.x = 3495;
   this.y = 360;
-  this.m1 = 39;
-  this.m2 = 40;
+  this.player_width = 39;
+  this.player_height = 40;
 
-  this.kep = [];
+  this.sprites = [];
 
-  this.kep[1] = loadImage("assets/imgs/items/virag_1.png");
-  this.kep[2] = loadImage("assets/imgs/items/virag_2.png");
-  this.kep[3] = loadImage("assets/imgs/items/virag_3.png");
-  this.kep[0] = this.kep[1];
-  this.millis_ = 0;
+  this.sprites[1] = loadImage("assets/imgs/items/virag_1.png");
+  this.sprites[2] = loadImage("assets/imgs/items/virag_2.png");
+  this.sprites[3] = loadImage("assets/imgs/items/virag_3.png");
+  this.sprites[0] = this.sprites[1];
+  this.elapsedMilliseconds = 0;
   this.i = 0;
 
   this.gba = -1;
@@ -21,7 +21,7 @@ function Virag() {
 
   this.sebesseg_v2 = 0;
 
-  this.megjelenites = function() {
+  this.update = function() {
 
     if (this.gba != talaj_fal.kerd && talaj_fal.kerd != 0 && (talaj_fal.kerd == 1003 || talaj_fal.kerd == 1006 || talaj_fal.kerd == 1008)) {
       this.gba = talaj_fal.kerd;
@@ -32,20 +32,20 @@ function Virag() {
 
     }
 
-    if (this.millis_ <= millis()) {
-      this.millis_ = millis() + 20;
+    if (this.elapsedMilliseconds <= millis()) {
+      this.elapsedMilliseconds = millis() + 20;
 
       switch (this.i) {
         case 0:
-          this.kep[0] = this.kep[1];
+          this.sprites[0] = this.sprites[1];
           this.i = 1;
           break;
         case 1:
-          this.kep[0] = this.kep[2];
+          this.sprites[0] = this.sprites[2];
           this.i = 2;
           break;
         case 2:
-          this.kep[0] = this.kep[3];
+          this.sprites[0] = this.sprites[3];
           this.i = 0;
           break;
       }
@@ -63,8 +63,8 @@ function Virag() {
 
     if (this.animation == true) {
       this.x -= this.sebesseg_v2;
-      image(this.kep[0], this.x, this.y, this.m1, this.m2);
-      if (this.y >= talaj_fal.y[talaj_fal.kerd] - talaj_fal.m2[talaj_fal.kerd] * 0.94) {
+      image(this.sprites[0], this.x, this.y, this.player_width, this.player_height);
+      if (this.y >= talaj_fal.y[talaj_fal.kerd] - talaj_fal.player_height[talaj_fal.kerd] * 0.94) {
         this.y--;
       } else {
         this.animation = false;
@@ -87,7 +87,7 @@ function Virag() {
 
     if (this.lathato == true) {
       this.x -= this.sebesseg_v2;
-      image(this.kep[0], this.x, this.y, this.m1, this.m2);
+      image(this.sprites[0], this.x, this.y, this.player_width, this.player_height);
     }
 
   }

@@ -3,142 +3,142 @@ function Jatekos() {
 
   this.x = 150;
   this.y = 269;
-  this.m1 = 30;
-  this.m2 = 41;
+  this.player_width = 30;
+  this.player_height = 41;
 
-  this.balra = false;
-  this.jobbra = false;
-  this.guggolas = false;
-  this.ugras = false;
-  this.lmugras = 90;
-  this.talaj = 0;
-  this.fut = false;
+  this.moveLeft = false;
+  this.moveRight = false;
+  this.crouch = false;
+  this.jump = false;
+  this.lastJump = 90;
+  this.floor = 0;
+  this.run = false;
   
-  this.em = height;
-  this.zuhanas = false;
+  this.bottom = height;
+  this.falling = false;
 
-  this.msebesseg = 3;
-  this.zsebesseg = 6;
-  this.usebesseg = 30;
-  this.ugrasi = 0;
-  this.gomba_ = 0;
-  this.ge = true;
-  this.halal = false;
-  this.hx = 0;
-  this.hy = 0;
-  this.ax = 0;
-  this.ay = 0;
-  this.ht = 0;
-  this.halhatatlan = false;
-  this.villog = false;
-  this.vi = 0;
-  this.millish_ = 0;
+  this.moveSpeed = 3;
+  this.jumpSpeed = 6;
+  this.maxJumpSpeed = 30;
+  this.jumpCounter = 0;
+  this.mushroom = 0;
+  this.isBig = true;
+  this.dead = false;
+  this.deadX = 0;
+  this.deadY = 0;
+  this.accelerationX = 0;
+  this.accelerationY = 0;
+  this.hurtTime = 0;
+  this.invulnerable = false;
+  this.flashing = false;
+  this.flashTime = 0;
+  this.milliseconds = 0;
 
-  this.kep = [];
-  this.kep[0] = loadImage("assets/imgs/mario/mario_0.png");
-  this.kep[1] = loadImage("assets/imgs/mario/mario_1.png");
-  this.kep[2] = loadImage("assets/imgs/mario/mario_2.png");
-  this.kep[3] = loadImage("assets/imgs/mario/mario_3.png");
-  this.kep[4] = loadImage("assets/imgs/mario/mario_4.png");
-  this.kep[5] = loadImage("assets/imgs/mario/mario_5.png");
-  this.kep[6] = loadImage("assets/imgs/mario/fire_mario_0.png");
-  this.kep[7] = loadImage("assets/imgs/mario/fire_mario_1.png");
-  this.kep[8] = loadImage("assets/imgs/mario/fire_mario_2.png");
-  this.kep[9] = loadImage("assets/imgs/mario/fire_mario_3.png");
-  this.kep[10] = loadImage("assets/imgs/mario/fire_mario_4.png");
-  this.kep[11] = loadImage("assets/imgs/mario/fire_mario_5.png");
-  this.kep[12] = loadImage("assets/imgs/mario/fire_mario_6.png");
-  this.kep[13] = loadImage("assets/imgs/mario/mario_reversed_0.png");
-  this.kep[14] = loadImage("assets/imgs/mario/mario_reversed_1.png");
-  this.kep[15] = loadImage("assets/imgs/mario/mario_reversed_2.png");
-  this.kep[16] = loadImage("assets/imgs/mario/mario_reversed_3.png");
-  this.kep[17] = loadImage("assets/imgs/mario/mario_reversed_3.png");
-  this.kep[18] = loadImage("assets/imgs/mario/mario_reversed_5.png");
-  this.kep[19] = loadImage("assets/imgs/mario/fire_mario_reversed_0.png");
-  this.kep[20] = loadImage("assets/imgs/mario/fire_mario_reversed_1.png");
-  this.kep[21] = loadImage("assets/imgs/mario/fire_mario_reversed_2.png");
-  this.kep[22] = loadImage("assets/imgs/mario/fire_mario_reversed_3.png");
-  this.kep[23] = loadImage("assets/imgs/mario/fire_mario_reversed_4.png");
-  this.kep[24] = loadImage("assets/imgs/mario/fire_mario_reversed_5.png");
-  this.kep[25] = loadImage("assets/imgs/mario/fire_mario_reversed_6.png");
-  this.kep[26] = loadImage("assets/imgs/mario/mario_dead.png");
+  this.sprites = [];
+  this.sprites[0] = loadImage("assets/imgs/mario/mario_0.png");
+  this.sprites[1] = loadImage("assets/imgs/mario/mario_1.png");
+  this.sprites[2] = loadImage("assets/imgs/mario/mario_2.png");
+  this.sprites[3] = loadImage("assets/imgs/mario/mario_3.png");
+  this.sprites[4] = loadImage("assets/imgs/mario/mario_4.png");
+  this.sprites[5] = loadImage("assets/imgs/mario/mario_5.png");
+  this.sprites[6] = loadImage("assets/imgs/mario/fire_mario_0.png");
+  this.sprites[7] = loadImage("assets/imgs/mario/fire_mario_1.png");
+  this.sprites[8] = loadImage("assets/imgs/mario/fire_mario_2.png");
+  this.sprites[9] = loadImage("assets/imgs/mario/fire_mario_3.png");
+  this.sprites[10] = loadImage("assets/imgs/mario/fire_mario_4.png");
+  this.sprites[11] = loadImage("assets/imgs/mario/fire_mario_5.png");
+  this.sprites[12] = loadImage("assets/imgs/mario/fire_mario_6.png");
+  this.sprites[13] = loadImage("assets/imgs/mario/mario_reversed_0.png");
+  this.sprites[14] = loadImage("assets/imgs/mario/mario_reversed_1.png");
+  this.sprites[15] = loadImage("assets/imgs/mario/mario_reversed_2.png");
+  this.sprites[16] = loadImage("assets/imgs/mario/mario_reversed_3.png");
+  this.sprites[17] = loadImage("assets/imgs/mario/mario_reversed_3.png");
+  this.sprites[18] = loadImage("assets/imgs/mario/mario_reversed_5.png");
+  this.sprites[19] = loadImage("assets/imgs/mario/fire_mario_reversed_0.png");
+  this.sprites[20] = loadImage("assets/imgs/mario/fire_mario_reversed_1.png");
+  this.sprites[21] = loadImage("assets/imgs/mario/fire_mario_reversed_2.png");
+  this.sprites[22] = loadImage("assets/imgs/mario/fire_mario_reversed_3.png");
+  this.sprites[23] = loadImage("assets/imgs/mario/fire_mario_reversed_4.png");
+  this.sprites[24] = loadImage("assets/imgs/mario/fire_mario_reversed_5.png");
+  this.sprites[25] = loadImage("assets/imgs/mario/fire_mario_reversed_6.png");
+  this.sprites[26] = loadImage("assets/imgs/mario/mario_dead.png");
 
-  this.millis_ = 0;
+  this.elapsedMilliseconds = 0;
   this.je = false;
   this.ji = 0;
 
   this.sebesseg_v2 = 3;
 
-  this.megjelenites = function() {
+  this.update = function() {
 
     if (jatekos.y > height) {
-      //this.halal = true;
+      //this.dead = true;
     }
 
     if (palya_vege.jv == false || palya_vege.av == true) {
-      if (this.balra == true && talaj_fal.tiltasb == false ) {
-        if (this.guggolas == false || this.gomba_ == 0 || this.zuhanas == true) {
-          this.x -= this.msebesseg;
+      if (this.moveLeft == true && talaj_fal.tiltasb == false ) {
+        if (this.crouch == false || this.mushroom == 0 || this.falling == true) {
+          this.x -= this.moveSpeed;
           this.x -= 5;
         }
       }
 
-      if (this.jobbra == true && talaj_fal.tiltasj == false) {
-        if (this.guggolas == false || this.gomba_ == 0 || this.zuhanas == true) {
-          this.x += this.msebesseg;
+      if (this.moveRight == true && talaj_fal.tiltasj == false) {
+        if (this.crouch == false || this.mushroom == 0 || this.falling == true) {
+          this.x += this.moveSpeed;
         }
       }
 
-      if (jatekos.guggolas == true) {
-        if (this.gomba_ > 0 && this.ugras == false && this.zuhanas == false) {
-          this.m1 = 39;
-          this.m2 = 55;
+      if (jatekos.crouch == true) {
+        if (this.mushroom > 0 && this.jump == false && this.falling == false) {
+          this.player_width = 39;
+          this.player_height = 55;
         }
       } else {
         if (talaj_fal.felallase == true) {
-          if (this.gomba_ == 0) {
-            this.m1 = 30;
-            this.m2 = 41;
+          if (this.mushroom == 0) {
+            this.player_width = 30;
+            this.player_height = 41;
           }
-          if (this.gomba_ > 0 || virag.felvett_virag == true) {
-            this.m1 = 41;
-            this.m2 = 75;
+          if (this.mushroom > 0 || flower.felvett_virag == true) {
+            this.player_width = 41;
+            this.player_height = 75;
           }
         }
       }
 
 
-      if (this.ugras == true) {
-        this.ugrasi += this.usebesseg;
-        this.msebesseg = 6
-        this.y -= map(this.ugrasi, 1, this.lmugras, 20, 6);
+      if (this.jump == true) {
+        this.jumpCounter += this.maxJumpSpeed;
+        this.moveSpeed = 6
+        this.y -= map(this.jumpCounter, 1, this.lastJump, 20, 6);
 
-        if (this.ugrasi >= this.lmugras) {
-          this.ugras = false;
-          this.ugrasi = 0;
-          this.msebesseg = 0;
+        if (this.jumpCounter >= this.lastJump) {
+          this.jump = false;
+          this.jumpCounter = 0;
+          this.moveSpeed = 0;
         }
       }
 
-      if (this.ugras == false) {
-        this.lmugras = 890;
+      if (this.jump == false) {
+        this.lastJump = 890;
       }
 
-      if (this.y + this.zsebesseg + jatekos.m2 / 2 <= this.em) {
-        this.y += this.zsebesseg
-        this.zuhanas = true;
-        this.msebesseg = 0;
+      if (this.y + this.jumpSpeed + jatekos.player_height / 2 <= this.bottom) {
+        this.y += this.jumpSpeed
+        this.falling = true;
+        this.moveSpeed = 0;
       }
 
-      if (this.em - this.y - this.m2 / 2 <= this.zsebesseg) {
-        if (this.ugras == false) {
-          this.y = this.em - this.m2 / 2
-          this.zuhanas = false;
+      if (this.bottom - this.y - this.player_height / 2 <= this.jumpSpeed) {
+        if (this.jump == false) {
+          this.y = this.bottom - this.player_height / 2
+          this.falling = false;
         }
       }
-      if (jatekos.balra == true || jatekos.jobbra == true) {
-        if (this.millis_ <= millis()) {
-          this.millis_ = millis() + 70;
+      if (jatekos.moveLeft == true || jatekos.moveRight == true) {
+        if (this.elapsedMilliseconds <= millis()) {
+          this.elapsedMilliseconds = millis() + 70;
           this.ji--;
           if (this.ji <= 0) {
             this.ji = 3;
@@ -146,125 +146,124 @@ function Jatekos() {
         }
       }
 
-      if (this.guggolas == true && this.ugras == false && (this.gomba_ > 0 || virag.felvett_virag == true)) {
+      if (this.crouch == true && this.jump == false && (this.mushroom > 0 || flower.felvett_virag == true)) {
         this.ji = 5;
       }
 
-      if (this.ugras == true || this.zuhanas == true) {
+      if (this.jump == true || this.falling == true) {
         this.ji = 4;
       }
 
-      if (key == "" && this.zuhanas == false && this.balra == false && this.jobbra == false && this.guggolas == false) {
+      if (key == "" && this.falling == false && this.moveLeft == false && this.moveRight == false && this.crouch == false) {
         this.ji = 0;
       }
     }
-    if (virag.felvett_virag == true) {
+    if (flower.felvett_virag == true) {
       this.ji += 6;
-
     }
 
-    if (loves.e == true && virag.felvett_virag == true && this.guggolas == false) {
+    if (loves.e == true && flower.felvett_virag == true && this.crouch == false) {
       this.ji = 12;
     }
 
 
-    if (this.villog == false && this.halal == false) {
+    if (this.flashing == false && this.dead == false) {
       if (loves.i == "j") {
         switch (this.ji) {
           case 0:
-            image(this.kep[0], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[0], this.x, this.y, this.player_width, this.player_height);
             break;
           case 1:
-            if (this.gomba_ == 0 || virag.felvett_virag == false) {
-              this.m1 = 33;
-              this.m2 = 40;
+            if (this.mushroom == 0 || flower.felvett_virag == false) {
+              this.player_width = 33;
+              this.player_height = 40;
             }
-            if (this.gomba_ > 0 || virag.felvett_virag == true) {
-              this.m1 = 39;
-              this.m2 = 75;
+            if (this.mushroom > 0 || flower.felvett_virag == true) {
+              this.player_width = 39;
+              this.player_height = 75;
             }
-            image(this.kep[1], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[1], this.x, this.y, this.player_width, this.player_height);
             break;
           case 2:
-            if (this.gomba_ == 0 || virag.felvett_virag == false) {
-              this.m1 = 28;
-              this.m2 = 40;
+            if (this.mushroom == 0 || flower.felvett_virag == false) {
+              this.player_width = 28;
+              this.player_height = 40;
 
             }
-            if (this.gomba_ > 0 || virag.felvett_virag == true) {
-              this.m1 = 34;
-              this.m2 = 75;
+            if (this.mushroom > 0 || flower.felvett_virag == true) {
+              this.player_width = 34;
+              this.player_height = 75;
             }
-            image(this.kep[2], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[2], this.x, this.y, this.player_width, this.player_height);
             break;
           case 3:
-            if (this.gomba_ == 0 || virag.felvett_virag == false) {
-              this.m1 = 33;
-              this.m2 = 40;
+            if (this.mushroom == 0 || flower.felvett_virag == false) {
+              this.player_width = 33;
+              this.player_height = 40;
             }
-            if (this.gomba_ > 0 || virag.felvett_virag == true) {
-              this.m1 = 39;
-              this.m2 = 75;
+            if (this.mushroom > 0 || flower.felvett_virag == true) {
+              this.player_width = 39;
+              this.player_height = 75;
             }
-            image(this.kep[3], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[3], this.x, this.y, this.player_width, this.player_height);
             break;
           case 4:
-            image(this.kep[4], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[4], this.x, this.y, this.player_width, this.player_height);
             break;
           case 5:
-            this.m1 = 39;
-            this.m2 = 55;
-            image(this.kep[5], this.x, this.y, this.m1, this.m2);
+            this.player_width = 39;
+            this.player_height = 55;
+            image(this.sprites[5], this.x, this.y, this.player_width, this.player_height);
             break;
           case 6:
-            image(this.kep[6], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[6], this.x, this.y, this.player_width, this.player_height);
             break;
           case 7:
-            if (this.gomba_ == 0 || virag.felvett_virag == false) {
-              this.m1 = 33;
-              this.m2 = 40;
+            if (this.mushroom == 0 || flower.felvett_virag == false) {
+              this.player_width = 33;
+              this.player_height = 40;
             }
-            if (this.gomba_ > 0 || virag.felvett_virag == true) {
-              this.m1 = 39;
-              this.m2 = 75;
+            if (this.mushroom > 0 || flower.felvett_virag == true) {
+              this.player_width = 39;
+              this.player_height = 75;
             }
-            image(this.kep[7], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[7], this.x, this.y, this.player_width, this.player_height);
             break;
           case 8:
-            if (this.gomba_ == 0 || virag.felvett_virag == false) {
-              this.m1 = 28;
-              this.m2 = 40;
+            if (this.mushroom == 0 || flower.felvett_virag == false) {
+              this.player_width = 28;
+              this.player_height = 40;
 
             }
-            if (this.gomba_ > 0 || virag.felvett_virag == true) {
-              this.m1 = 34;
-              this.m2 = 75;
+            if (this.mushroom > 0 || flower.felvett_virag == true) {
+              this.player_width = 34;
+              this.player_height = 75;
             }
-            image(this.kep[8], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[8], this.x, this.y, this.player_width, this.player_height);
             break;
           case 9:
-            if (this.gomba_ == 0 || virag.felvett_virag == false) {
-              this.m1 = 33;
-              this.m2 = 40;
+            if (this.mushroom == 0 || flower.felvett_virag == false) {
+              this.player_width = 33;
+              this.player_height = 40;
             }
-            if (this.gomba_ > 0 || virag.felvett_virag == true) {
-              this.m1 = 39;
-              this.m2 = 75;
+            if (this.mushroom > 0 || flower.felvett_virag == true) {
+              this.player_width = 39;
+              this.player_height = 75;
             }
-            image(this.kep[9], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[9], this.x, this.y, this.player_width, this.player_height);
             break;
           case 10:
-            image(this.kep[10], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[10], this.x, this.y, this.player_width, this.player_height);
             break;
           case 11:
-            this.m1 = 39;
-            this.m2 = 55;
-            image(this.kep[11], this.x, this.y, this.m1, this.m2);
+            this.player_width = 39;
+            this.player_height = 55;
+            image(this.sprites[11], this.x, this.y, this.player_width, this.player_height);
             break;
           case 12:
-            this.m1 = 39;
-            this.m2 = 75;
-            image(this.kep[12], this.x, this.y, this.m1, this.m2);
+            this.player_width = 39;
+            this.player_height = 75;
+            image(this.sprites[12], this.x, this.y, this.player_width, this.player_height);
             break;
           default:
 
@@ -273,104 +272,104 @@ function Jatekos() {
       } else {
         switch (this.ji) {
           case 0:
-            image(this.kep[13], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[13], this.x, this.y, this.player_width, this.player_height);
             break;
           case 1:
-            if (this.gomba_ == 0 || virag.felvett_virag == false) {
-              this.m1 = 33;
-              this.m2 = 40;
+            if (this.mushroom == 0 || flower.felvett_virag == false) {
+              this.player_width = 33;
+              this.player_height = 40;
             }
-            if (this.gomba_ > 0 || virag.felvett_virag == true) {
-              this.m1 = 39;
-              this.m2 = 75;
+            if (this.mushroom > 0 || flower.felvett_virag == true) {
+              this.player_width = 39;
+              this.player_height = 75;
             }
-            image(this.kep[14], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[14], this.x, this.y, this.player_width, this.player_height);
             break;
           case 2:
-            if (this.gomba_ == 0 || virag.felvett_virag == false) {
-              this.m1 = 28;
-              this.m2 = 40;
+            if (this.mushroom == 0 || flower.felvett_virag == false) {
+              this.player_width = 28;
+              this.player_height = 40;
 
             }
-            if (this.gomba_ > 0 || virag.felvett_virag == true) {
-              this.m1 = 34;
-              this.m2 = 75;
+            if (this.mushroom > 0 || flower.felvett_virag == true) {
+              this.player_width = 34;
+              this.player_height = 75;
             }
-            image(this.kep[15], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[15], this.x, this.y, this.player_width, this.player_height);
             break;
           case 3:
-            if (this.gomba_ == 0 || virag.felvett_virag == false) {
-              this.m1 = 33;
-              this.m2 = 40;
+            if (this.mushroom == 0 || flower.felvett_virag == false) {
+              this.player_width = 33;
+              this.player_height = 40;
             }
-            if (this.gomba_ > 0 || virag.felvett_virag == true) {
-              this.m1 = 39;
-              this.m2 = 75;
+            if (this.mushroom > 0 || flower.felvett_virag == true) {
+              this.player_width = 39;
+              this.player_height = 75;
             }
-            image(this.kep[16], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[16], this.x, this.y, this.player_width, this.player_height);
             break;
           case 4:
-            image(this.kep[17], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[17], this.x, this.y, this.player_width, this.player_height);
             break;
           case 5:
-            this.m1 = 39;
-            this.m2 = 55;
-            image(this.kep[18], this.x, this.y, this.m1, this.m2);
+            this.player_width = 39;
+            this.player_height = 55;
+            image(this.sprites[18], this.x, this.y, this.player_width, this.player_height);
             break;
           case 6:
-            image(this.kep[19], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[19], this.x, this.y, this.player_width, this.player_height);
             break;
           case 7:
-            if (this.gomba_ == 0 || virag.felvett_virag == false) {
-              this.m1 = 33;
-              this.m2 = 40;
+            if (this.mushroom == 0 || flower.felvett_virag == false) {
+              this.player_width = 33;
+              this.player_height = 40;
             }
-            if (this.gomba_ > 0 || virag.felvett_virag == true) {
-              this.m1 = 39;
-              this.m2 = 75;
+            if (this.mushroom > 0 || flower.felvett_virag == true) {
+              this.player_width = 39;
+              this.player_height = 75;
             }
-            image(this.kep[20], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[20], this.x, this.y, this.player_width, this.player_height);
             break;
           case 8:
-            if (this.gomba_ == 0 || virag.felvett_virag == false) {
-              this.m1 = 28;
-              this.m2 = 40;
+            if (this.mushroom == 0 || flower.felvett_virag == false) {
+              this.player_width = 28;
+              this.player_height = 40;
 
             }
-            if (this.gomba_ > 0 || virag.felvett_virag == true) {
-              this.m1 = 34;
-              this.m2 = 75;
+            if (this.mushroom > 0 || flower.felvett_virag == true) {
+              this.player_width = 34;
+              this.player_height = 75;
             }
-            image(this.kep[21], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[21], this.x, this.y, this.player_width, this.player_height);
             break;
           case 9:
-            if (this.gomba_ == 0 || virag.felvett_virag == false) {
-              this.m1 = 33;
-              this.m2 = 40;
+            if (this.mushroom == 0 || flower.felvett_virag == false) {
+              this.player_width = 33;
+              this.player_height = 40;
             }
-            if (this.gomba_ > 0 || virag.felvett_virag == true) {
-              this.m1 = 39;
-              this.m2 = 75;
+            if (this.mushroom > 0 || flower.felvett_virag == true) {
+              this.player_width = 39;
+              this.player_height = 75;
             }
-            image(this.kep[22], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[22], this.x, this.y, this.player_width, this.player_height);
             break;
           case 10:
-            image(this.kep[23], this.x, this.y, this.m1, this.m2);
+            image(this.sprites[23], this.x, this.y, this.player_width, this.player_height);
             break;
           case 11:
-            this.m1 = 39;
-            this.m2 = 55;
-            image(this.kep[24], this.x, this.y, this.m1, this.m2);
+            this.player_width = 39;
+            this.player_height = 55;
+            image(this.sprites[24], this.x, this.y, this.player_width, this.player_height);
             break;
           case 12:
-            this.m1 = 39;
-            this.m2 = 75;
-            image(this.kep[25], this.x, this.y, this.m1, this.m2);
+            this.player_width = 39;
+            this.player_height = 75;
+            image(this.sprites[25], this.x, this.y, this.player_width, this.player_height);
             break;
         }
       }
 
-      if (virag.felvett_virag == true) {
+      if (flower.felvett_virag == true) {
         this.ji -= 6;
       }
 
@@ -378,18 +377,18 @@ function Jatekos() {
 
 
     for (var j = 1; j <= ellenseg_gomba.x.length - 1; j++) {
-      if (ellenseg_gomba.halott[j] == false && this.halhatatlan == false && this.halal == false) {
+      if (ellenseg_gomba.halott[j] == false && this.invulnerable == false && this.dead == false) {
         if (abs(this.x - ellenseg_gomba.x[j]) < 20 && abs(this.y - ellenseg_gomba.y[j]) < 20) {
-          if (this.gomba_ == 0 && virag.felvett_virag == false) {
-            this.halal = true;
-            this.hx = this.x;
-            this.hy = this.y;
-            this.ht = 0;
+          if (this.mushroom == 0 && flower.felvett_virag == false) {
+            this.dead = true;
+            this.deadX = this.x;
+            this.deadY = this.y;
+            this.hurtTime = 0;
           } else {
-            this.gomba_ = 0;
-            virag.felvett_virag = false;
-            this.halhatatlan = true;
-            this.vi = 0;
+            this.mushroom = 0;
+            flower.felvett_virag = false;
+            this.invulnerable = true;
+            this.flashTime = 0;
           }
         }
       }
@@ -397,47 +396,47 @@ function Jatekos() {
 
 
     for (var j = 1; j <= ellenseg_kacsa.x.length - 1; j++) {
-      if (ellenseg_kacsa.kv[j] == false && this.halhatatlan == false && this.halal == false) {
+      if (ellenseg_kacsa.kv[j] == false && this.invulnerable == false && this.dead == false) {
         if (abs(this.x - ellenseg_kacsa.x[j]) < 20 && abs(this.y - ellenseg_kacsa.y[j]) < 20) {
-          if (this.gomba_ == 0 && virag.felvett_virag == false) {
-            this.halal = true;
-            this.hx = this.x;
-            this.hy = this.y;
+          if (this.mushroom == 0 && flower.felvett_virag == false) {
+            this.dead = true;
+            this.deadX = this.x;
+            this.deadY = this.y;
           } else {
-            this.gomba_ = 0;
-            virag.felvett_virag = false;
-            this.halhatatlan = true;
-            this.vi = 0;
+            this.mushroom = 0;
+            flower.felvett_virag = false;
+            this.invulnerable = true;
+            this.flashTime = 0;
           }
         }
       }
     }
 
-    if (this.halhatatlan == true) {
-      if (this.millish_ < millis()) {
-        this.millish_ = millis() + 100;
-        this.vi++;
-        if (this.villog == false) {
-          this.villog = true;
+    if (this.invulnerable == true) {
+      if (this.milliseconds < millis()) {
+        this.milliseconds = millis() + 100;
+        this.flashTime++;
+        if (this.flashing == false) {
+          this.flashing = true;
         } else {
-          this.villog = false;
+          this.flashing = false;
         }
       }
 
-      if (this.vi >= 30) {
-        this.villog = false
-        this.halhatatlan = false;
+      if (this.flashTime >= 30) {
+        this.flashing = false
+        this.invulnerable = false;
       }
 
     }
 
     this.meghal = function() {
 
-      if (this.halal == true && this.halhatatlan == false) {
-        this.ht += 0.2
-        this.ax = this.hx + 40 * this.ht * cos(-90);
-        this.ay = this.hy + 40 * this.ht * sin(-90) + 9.81 / 2 * sq(this.ht);
-        image(this.kep[26], this.ax, this.ay, 35, 37);
+      if (this.dead == true && this.invulnerable == false) {
+        this.hurtTime += 0.2
+        this.accelerationX = this.deadX + 40 * this.hurtTime * cos(-90);
+        this.accelerationY = this.deadY + 40 * this.hurtTime * sin(-90) + 9.81 / 2 * sq(this.hurtTime);
+        image(this.sprites[26], this.accelerationX, this.accelerationY, 35, 37);
 
       }
     }

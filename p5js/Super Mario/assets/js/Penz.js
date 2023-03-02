@@ -4,26 +4,26 @@ function Penz() {
   this.y = 360;
   this.m1e = 28;
   this.m2e = 35;
-  this.m1 = 28;
-  this.m2 = 35;
-  this.kep = [];
+  this.player_width = 28;
+  this.player_height = 35;
+  this.sprites = [];
   this.forgas = 1;
   this.zuhan = false;
   this.lathato = false;
   this.yelvartmin = 0;
   this.yelvartmax = 0;
-  this.kep[1] = loadImage("assets/imgs/items/money_1.png");
-  this.kep[2] = loadImage("assets/imgs/items/money_2.png");
-  this.kep[3] = loadImage("assets/imgs/items/money_3.png");
+  this.sprites[1] = loadImage("assets/imgs/items/money_1.png");
+  this.sprites[2] = loadImage("assets/imgs/items/money_2.png");
+  this.sprites[3] = loadImage("assets/imgs/items/money_3.png");
 
-  this.kep[0] = this.kep[1];
+  this.sprites[0] = this.sprites[1];
   this.pl = false;
   this.px = 0;
   this.py = 0;
   
   this.sebesseg_v2 = 0;
   
-  this.megjelenites = function() {
+  this.update = function() {
 
     if (talaj_fal.kerd == 1000 || talaj_fal.kerd == 1001 || talaj_fal.kerd == 1007 || talaj_fal.kerd == 1009) {
       if (talaj_fal.kerdi[talaj_fal.kerd] == 1) {
@@ -58,33 +58,33 @@ function Penz() {
 
     if (this.lathato == true) {
       this.x -= this.sebesseg_v2;
-      image(this.kep[0], this.x, this.y, this.m1, this.m2);
+      image(this.sprites[0], this.x, this.y, this.player_width, this.player_height);
     }
 
     switch (this.forgas) {
       case 1:
-        if (this.m1 >= this.m1e / 3) {
-          this.m1 -= 1.7;
+        if (this.player_width >= this.m1e / 3) {
+          this.player_width -= 1.7;
         } else {
           this.forgas = 2;
-          this.kep[0] = this.kep[3];
+          this.sprites[0] = this.sprites[3];
         }
         break;
       case 2:
-        if (this.m1 <= this.m1e * 1.1) {
-          this.m1 += 1.7;
+        if (this.player_width <= this.m1e * 1.1) {
+          this.player_width += 1.7;
         } else {
           this.forgas = 3;
-          this.kep[0] = this.kep[2];
+          this.sprites[0] = this.sprites[2];
         }
         break;
       case 3:
-        if (this.m1 <= this.m1e * 1.6) {
-          this.m1 += 1.7;
+        if (this.player_width <= this.m1e * 1.6) {
+          this.player_width += 1.7;
         } else {
           this.forgas = 1;
-          this.m1 = this.m1e * 0.9;
-          this.kep[0] = this.kep[1];
+          this.player_width = this.m1e * 0.9;
+          this.sprites[0] = this.sprites[1];
         }
         break;
       default:
