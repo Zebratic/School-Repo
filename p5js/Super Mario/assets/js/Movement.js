@@ -32,76 +32,53 @@ function Movement() {
         }
 
         if (player.moveRight == true && maploader.flipRight == false && player.dead == false) {
-            for (let i = 0; i <= graphics.kfx.length - 1; i++) {
-                graphics.kfx[i] -= player.speed_v2;
-            }
+            for (let i = 0; i <= graphics.kfx.length - 1; i++)      graphics.kfx[i] -= player.speed_v2;
+            for (let i = 0; i <= graphics.kozfx.length - 1; i++)    graphics.kozfx[i] -= player.speed_v2;
+            for (let i = 0; i <= graphics.nfx.length - 1; i++)      graphics.nfx[i] -= player.speed_v2;
+            for (let i = 0; i <= graphics.kdbx.length - 1; i++)     graphics.kdbx[i] -= player.speed_v2;
+            for (let i = 0; i <= graphics.ndbx.length - 1; i++)     graphics.ndbx[i] -= player.speed_v2;
+            for (let i = 0; i <= graphics.kbx.length - 1; i++)      graphics.kbx[i] -= player.speed_v2;
+            for (let i = 0; i <= graphics.kozbx.length - 1; i++)    graphics.kozbx[i] -= player.speed_v2;
+            for (let i = 0; i <= graphics.nbx.length - 1; i++)      graphics.nbx[i] -= player.speed_v2;
 
-            for (let i = 0; i <= graphics.kozfx.length - 1; i++) {
-                graphics.kozfx[i] -= player.speed_v2;
-            }
-
-            for (let i = 0; i <= graphics.nfx.length - 1; i++) {
-                graphics.nfx[i] -= player.speed_v2;
-            }
-
-            for (let i = 0; i <= graphics.kdbx.length - 1; i++) {
-                graphics.kdbx[i] -= player.speed_v2;
-            }
-
-            for (let i = 0; i <= graphics.ndbx.length - 1; i++) {
-                graphics.ndbx[i] -= player.speed_v2;
-            }
-
-            for (let i = 0; i <= graphics.kbx.length - 1; i++) {
-                graphics.kbx[i] -= player.speed_v2;
-            }
-
-            for (let i = 0; i <= graphics.kozbx.length - 1; i++) {
-                graphics.kozbx[i] -= player.speed_v2;
-            }
-
-            for (let i = 0; i <= graphics.nbx.length - 1; i++) {
-                graphics.nbx[i] -= player.speed_v2;
-            }
         }
 
         if (player.moveRight == true && maploader.flipRight == false) {
-            maploader.speed_v2 = -player.speed_v2
+            maploader.speed_v2 = -player.speed_v2;
         } else {
             maploader.speed_v2 = 0;
         }
 
-        if (player.moveRight == true && maploader.flipRight == false) {
-            if (mushroom.moveLeft == true && mushroom.flipLeft == false) {
+        if (player.moveRight == true && maploader.flipRight == false)
+        {
+            if (mushroom.moveLeft == true && mushroom.flipLeft == false)
                 mushroom.speed_v2 = player.speed_v2 + 3;
-            }
-            if (mushroom.moveRight == true && mushroom.flipRight == false) {
+            
+            if (mushroom.moveRight == true && mushroom.flipRight == false)
                 mushroom.speed_v2 = (player.speed_v2 - 3) * -1;
-            }
 
-            if (mushroom.animation == true) {
+            if (mushroom.animation == true)
                 mushroom.x -= player.speed_v2;
-            }
-
-        } else {
+        }
+        else 
             mushroom.speed_v2 = 3;
-        }
 
-        if (player.moveRight == true && maploader.flipRight == false) {
-            if (money.visible == true) {
+        if (player.moveRight == true && maploader.flipRight == false)
+        {
+            if (money.visible == true)
                 money.speed_v2 = player.speed_v2;
-            }
-        } else {
+        }
+        else
             money.speed_v2 = 0;
-        }
 
-        if (player.moveRight == true && maploader.flipRight == false && player.dead == false) {
-            if (flower.visible == true || flower.animation == true) {
+        if (player.moveRight == true && maploader.flipRight == false && player.dead == false)
+        {
+            if (flower.visible == true || flower.animation == true)
                 flower.speed_v2 = player.speed_v2;
-            }
-        } else {
-            flower.speed_v2 = 0;
+            
         }
+        else
+            flower.speed_v2 = 0;
 
         if (player.moveRight == true && maploader.flipRight == false && player.dead == false) {
             castle.rx -= player.speed_v2;
@@ -226,8 +203,5 @@ function Movement() {
                 }
             }
         }
-
-
-
     }
 }

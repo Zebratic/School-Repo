@@ -14,7 +14,7 @@ function Castle() {
     this.elapsedMilliseconds = 0;
     this.av = false;
     this.zi = false;
-    this.mt = false
+    this.end = false
 
     this.update = function () {
         image(this.sprites[0], this.vx, this.vy, 196, 200);
@@ -24,7 +24,7 @@ function Castle() {
         if (abs(player.x - this.rx) < 10 && this.jv == false && this.av == false) {
             this.jv = true;
             this.elapsedMilliseconds = millis() + 100;
-            this.mt = true;
+            this.end = true;
             player.moveRight = false;
             points_animation.ai++;
             points_animation.x[points_animation.ai] = player.x + 20;

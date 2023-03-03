@@ -23,6 +23,7 @@ function setup() {
     squash_animation = new Squash_Animation();
     castle = new Castle();
     movement = new Movement();
+    debug = new Debug();
 
     fireball.i = "j";
     textFont('monospace')
@@ -47,7 +48,8 @@ function setup() {
 
 }
 
-function draw() {
+function draw()
+{
     background(92, 136, 252);
     graphics.render();
     castle.update();
@@ -77,12 +79,12 @@ function draw() {
     player.dies();
 
     movement.update();
-
+    debug.update();
 }
 
-function keyPressed() {
-
-    if (castle.mt == false) {
+function keyPressed()
+{
+    if (castle.end == false) {
         if ((key == "a" || key == "A" || keyCode == "37") && player.crouch == false) {
             player.moveLeft = true;
             fireball.i = "b";
@@ -103,45 +105,41 @@ function keyPressed() {
             }
         }
 
-        if (key == "f" || key == "F") {
-            fireball.e = true;
-        }
+        if (key == " ") fireball.e = true;
+        if (key == "Shift") player.run = true;
+    }
 
-        if (key == "Shift") {
-            player.run = true;
-        }
-
+    if (key == "Control")
+        debug.enabled = !debug.enabled;
+        
+    switch (key)
+    {
+        case "1": debug.shown_type = "player"; break;
+        case "2": debug.shown_type = "enemies"; break;
+        case "3": debug.shown_type = "map"; break;
+        case "4": debug.shown_type = "misc"; break;
     }
 }
 
-function keyReleased() {
+function keyReleased()
+{
+    if (key == "a" || key == "A" || keyCode == "37") player.moveLeft = false;
+    if (key == "d" || key == "D" || keyCode == "39") player.moveRight = false;
+    if (key == "s" || key == "S" || keyCode == "40") player.crouch = false;
+    if (key == " ") fireball.e = false;
+    if (key == "Shift") player.run = false;
 
-    if (key == "a" || key == "A" || keyCode == "37") {
-        player.moveLeft = false;
-    }
-
-    if (key == "d" || key == "D" || keyCode == "39") {
-        player.moveRight = false;
-    }
-
-    if (key == "s" || key == "S" || keyCode == "40") {
-        player.crouch = false;
-    }
-
-    if (key == "f" || key == "F") {
-        fireball.e = false;
-    }
-    if (key == "Shift") {
-        player.run = false;
-    }
-
-    key = "";
-
+    key = ""; // reset key to set animation to idle
 }
 
-function mousePressed() {
-    player.x = mouseX;
-    player.y = mouseY;
-    print(mouseX);
-    print(mouseY);
+function mousePressed()
+{
+    if (debug.enabled)
+    {
+        // debug place mario
+        player.x = mouseX;
+        player.y = mouseY;
+        print(mouseX);
+        print(mouseY);
+    }
 }
