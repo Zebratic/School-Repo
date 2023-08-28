@@ -1,0 +1,45 @@
+{
+    "manifest_version": 3,
+    "name": "AarhusTech++",
+    "description": "Gør din oplevelse med Aarhus Tech's hjemmesider bedre!",
+    "version": "1.0",
+    "icons": {
+        "16": "images/icon.png",
+        "48": "images/icon.png",
+        "128": "images/icon.png"
+    },
+    "permissions": [
+        "tabs",
+        "scripting",
+        "activeTab"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/icon.png",
+            "48": "images/icon.png",
+            "128": "images/icon.png"
+        }
+    },
+    "background": {
+        "service_worker": "scripts/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://selvbetjening.aarhustech.dk/WebTimeTable/default.aspx*"],
+            "js": [
+                "scripts/BedreSkema.js",
+                "scripts/darkmode.js"
+            ],
+            "css": [
+                "styles/darkmode.css"
+            ]
+        }
+    ],
+    "host_permissions": [
+        "https://*.aarhustech.dk/*",
+        "https://aarhustech.dk/*",
+        "https://*.itslearning.com/*",
+        "https://itslearning.com/*"
+    ]
+}

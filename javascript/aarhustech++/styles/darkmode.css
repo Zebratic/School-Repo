@@ -1,0 +1,82 @@
+:root {
+    --neutral-background: #212222;
+    --text-color: #eae3d9;
+    --selection-background: #165aaa;
+    --selection-text: #fbf5ec;
+    --primary: #165aaa;
+    --primary-light: #1e6ccf;
+    --primary-dark: #0f4b8c;
+    --secondary: #2d2d2d; 
+    --secondary-dark: #1f1f1f;
+    --secondary-light: #3d3d3d;
+    --dark-background: black;
+
+}
+
+
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    color: var(--text-color) !important;
+}
+
+body {
+    background-color: var(--neutral-background) !important;
+    color: var(--text-color) !important;
+}
+
+/* =============== FIX TIMER =============== */
+.AppointmentBoxContent {
+    background-color: var(--secondary-light) !important;
+    color: var(--text-color);
+}
+.schemaDayHolderCell > div:not([class]) {
+    border-radius: 10px;
+    border: 1px solid var(--text-color);
+    box-shadow: 0px 0px 5px 0px var(--text-color);
+}
+.schemaDayHolderCell > div:not([class]):hover {
+    border: 1px solid var(--primary);
+    box-shadow: 0px 0px 25px 0px var(--primary);
+    z-index: 9999;
+}
+/* =============== FIX TIMER =============== */
+
+
+/* =============== FIX POPUP =============== */
+/* id="dhtmltooltip" */
+#dhtmltooltip {
+    background-color: var(--secondary) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--dark-background) !important;
+    box-shadow: 0px 0px 5px 0px var(--neutral-background) !important;
+}
+/* =============== FIX POPUP =============== */
+
+
+
+/* =============== FIX BACKGROUND GRID =============== */
+.dayBackGround_OffHour_Even, .dayBackGround_OnHour_Even {
+    background-color: var(--secondary) !important;
+    color: var(--text-color) !important;
+}
+.dayBackGround_OffHour_Odd, .dayBackGround_OnHour_Odd {
+    background-color: var(--secondary-light) !important;
+    color: var(--text-color) !important;
+}
+/* =============== FIX BACKGROUND GRID =============== */
+
+
+
+/* =============== CURRENT TIME LINE =============== */
+#current_time {
+    background-color: var(--primary) !important;
+    color: var(--text-color) !important;
+    /* make line go from full left to right side of page */
+    left: 0px !important;
+    width: 100vh !important;
+    z-index: 9999 !important;
+    /* line should be on top of everything, and not affect any other elements */
+    position: fixed !important;
+    
+    
+}
