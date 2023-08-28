@@ -6,6 +6,7 @@
     --primary: #165aaa;
     --primary-light: #1e6ccf;
     --primary-dark: #0f4b8c;
+    --primary-box: #4f46e5;
     --secondary: #2d2d2d; 
     --secondary-dark: #1f1f1f;
     --secondary-light: #3d3d3d;
@@ -26,13 +27,14 @@ body {
 
 /* =============== FIX TIMER =============== */
 .AppointmentBoxContent {
-    background-color: var(--secondary-light) !important;
+    background-color: var(--primary-box);
+    background-size: stretch;
     color: var(--text-color);
 }
 .schemaDayHolderCell > div:not([class]) {
     border-radius: 10px;
     border: 1px solid var(--text-color);
-    box-shadow: 0px 0px 5px 0px var(--text-color);
+    box-shadow: 0px 0px 10px 0px var(--text-color);
 }
 .schemaDayHolderCell > div:not([class]):hover {
     border: 1px solid var(--primary);
@@ -56,11 +58,11 @@ body {
 
 /* =============== FIX BACKGROUND GRID =============== */
 .dayBackGround_OffHour_Even, .dayBackGround_OnHour_Even {
-    background-color: var(--secondary) !important;
+    background-color: var(--dark-background) !important;
     color: var(--text-color) !important;
 }
 .dayBackGround_OffHour_Odd, .dayBackGround_OnHour_Odd {
-    background-color: var(--secondary-light) !important;
+    background-color: var(--secondary-dark) !important;
     color: var(--text-color) !important;
 }
 /* =============== FIX BACKGROUND GRID =============== */
@@ -71,12 +73,18 @@ body {
 #current_time {
     background-color: var(--primary) !important;
     color: var(--text-color) !important;
-    /* make line go from full left to right side of page */
     left: 0px !important;
-    width: 100vh !important;
+    width: 100% !important;
     z-index: 9999 !important;
-    /* line should be on top of everything, and not affect any other elements */
-    position: fixed !important;
-    
-    
 }
+/* =============== CURRENT TIME LINE =============== */
+
+
+/* ==================== FIX BANNER ==================== */
+.PeriodPanel {
+    background-image: url(https://rare-gallery.com/uploads/posts/1243731-black-and-gray-carbon-fiber-like-texture.jpg) !important;
+    background-size: stretch;
+    color: var(--text-color) !important;
+}
+
+/* ==================== FIX BANNER ==================== */
