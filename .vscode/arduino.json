@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
-    "port": "COM3",
-    "sketch": "arduino\\blinker\\blinker.ino"
+    "port": "COM4",
+    "sketch": "arduino\\micromouse\\micromouse.ino"
 }
