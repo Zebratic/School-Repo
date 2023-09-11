@@ -70,3 +70,54 @@ function SkemaMonitor()
     // wait for 100ms
     setTimeout(SkemaMonitor, 100);
 }
+
+
+// setup mouse event
+document.addEventListener("mouseover", function(event) {
+    if (event.target.tagName == "TD")
+    {
+        let parent = event.target;
+        for (let i = 0; i < 5; i++)
+        {
+            // until name is test (max 4 times) once found, set height to auto
+            console.log(parent);
+            if (parent.getAttribute("name") == "test ")
+            {
+                parent.style.height = "auto";
+                // get new height after setting to auto
+                let height = parent.clientHeight;
+                parent.parentElement.style.height = height + "px";
+                parent.parentElement.style.position = "absolute";
+                parent.parentElement.style.zIndex = "100";
+                parent.parentElement.style.width = "auto";
+                console.log("set height to auto");
+                break;
+            }
+            parent = parent.parentElement;
+        }
+    }
+});
+document.addEventListener("mouseout", function(event) {
+    if (event.target.tagName == "TD")
+    {
+        // go up until name is test (max 4 times) once found, set height to 59px (default)
+        let parent = event.target;
+        for (let i = 0; i < 5; i++)
+        {
+            // until name is test (max 4 times) once found, set height to auto
+            if (parent.getAttribute("name") == "test ")
+            {
+                parent.style.height = "59px";
+                parent.parentElement.style.height = "59px";
+                parent.parentElement.style.position = "relative";
+                parent.parentElement.style.zIndex = "1";
+                parent.parentElement.style.width = "98%";
+                console.log("set height to 59px");
+                break;
+            }
+            parent = parent.parentElement;
+            
+        }
+
+    }
+});

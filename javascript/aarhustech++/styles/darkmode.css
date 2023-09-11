@@ -23,17 +23,31 @@ body {
     color: var(--text-color) !important;
 }
 
+td {
+    color: var(--secondary-dark) !important;
+}
+
 /* =============== FIX TIMER =============== */
 .AppointmentBoxContent {
     background-color: var(--primary);
-    color: var(--text-color);
 }
+/* schemaDayHolderCell and schemaDayHolderCell_Current */
 .schemaDayHolderCell > div:not([class]) {
     border-radius: 10px;
     border: 1px solid var(--text-color);
     box-shadow: 0px 0px 10px 0px var(--text-color);
 }
 .schemaDayHolderCell > div:not([class]):hover {
+    border: 1px solid var(--primary);
+    box-shadow: 0px 0px 25px 0px var(--primary);
+    z-index: 9999;
+}
+.schemaDayHolderCell_Current > div:not([class]) {
+    border-radius: 10px;
+    border: 1px solid var(--text-color);
+    box-shadow: 0px 0px 10px 0px var(--text-color);
+}
+.schemaDayHolderCell_Current > div:not([class]):hover {
     border: 1px solid var(--primary);
     box-shadow: 0px 0px 25px 0px var(--primary);
     z-index: 9999;
