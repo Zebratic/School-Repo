@@ -56,7 +56,6 @@ td {
 
 
 /* =============== FIX POPUP =============== */
-/* id="dhtmltooltip" */
 #dhtmltooltip {
     background-color: var(--secondary) !important;
     color: var(--text-color) !important;
@@ -97,3 +96,18 @@ td {
     color: var(--text-color) !important;
 }
 /* ==================== FIX BANNER ==================== */
+
+
+/* ==================== FIX CLICKED POPUP ==================== */
+#ActionDiv {
+    background-color: var(--secondary) !important;
+    color: var(--text-color) !important;
+}
+/* <table id="ActionTabel"><tbody><tr style="cursor: pointer;"><td>TEXT</td></tr></tbody></table> */
+#ActionTabel > tbody > tr > td {
+    color: var(--primary) !important;
+}
+#ActionTabel > tbody > tr > td:hover {
+    color: var(--primary-light) !important;
+}
+/* ==================== FIX CLICKED POPUP ==================== */

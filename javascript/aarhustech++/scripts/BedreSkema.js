@@ -72,25 +72,23 @@ function SkemaMonitor()
 }
 
 
+
+
+
+
+
 // setup mouse event
 document.addEventListener("mouseover", function(event) {
-    if (event.target.tagName == "TD")
+    if (event.target.tagName == "TD" || event.target.tagName == "IMG" || event.target.tagName == "DIV")
     {
         let parent = event.target;
-        for (let i = 0; i < 5; i++)
+        for (let i = 0; i < 7; i++)
         {
-            // until name is test (max 4 times) once found, set height to auto
-            console.log(parent);
+            if (parent == null) break;
             if (parent.getAttribute("name") == "test ")
             {
-                parent.style.height = "auto";
-                // get new height after setting to auto
-                let height = parent.clientHeight;
-                parent.parentElement.style.height = height + "px";
-                parent.parentElement.style.position = "absolute";
-                parent.parentElement.style.zIndex = "100";
-                parent.parentElement.style.width = "auto";
-                console.log("set height to auto");
+                parent.style.fontWeight = "bold";
+                parent.style.cursor = "pointer";
                 break;
             }
             parent = parent.parentElement;
@@ -98,21 +96,15 @@ document.addEventListener("mouseover", function(event) {
     }
 });
 document.addEventListener("mouseout", function(event) {
-    if (event.target.tagName == "TD")
+    if (event.target.tagName == "TD" || event.target.tagName == "IMG" || event.target.tagName == "DIV")
     {
-        // go up until name is test (max 4 times) once found, set height to 59px (default)
         let parent = event.target;
-        for (let i = 0; i < 5; i++)
+        for (let i = 0; i < 7; i++)
         {
-            // until name is test (max 4 times) once found, set height to auto
+            if (parent == null) break;
             if (parent.getAttribute("name") == "test ")
             {
-                parent.style.height = "59px";
-                parent.parentElement.style.height = "59px";
-                parent.parentElement.style.position = "relative";
-                parent.parentElement.style.zIndex = "1";
-                parent.parentElement.style.width = "98%";
-                console.log("set height to 59px");
+                parent.style.fontWeight = "normal";
                 break;
             }
             parent = parent.parentElement;
