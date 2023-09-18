@@ -1,36 +1,45 @@
-#include <WiFi.h>
+// Import required libraries
 #include <DNSServer.h>
-#include <WiFiManager.h>
+#include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
+#include <SPIFFS.h>
 
-// Set your hotspot credentials here
-const char* ssid = "Micromouse";
-const char* password = "htxmoment";
+// Replace with your network credentials
+const char *ssid = "Micromouse";
+const char *password = "htxmoment";
 
-// Create an instance of the server
-AsyncWebServer server(3000);
+// Create AsyncWebServer object on port 80
+AsyncWebServer server(80);
 
-void setup() {
-  // Start Serial for debugging
+void setup()
+{
+  // Serial port for debugging purposes
   Serial.begin(115200);
 
-  // create a new hotspot 
-  WiFiManager wifiManager;
-  wifiManager.autoConnect(ssid, password);
+  // Initialize SPIFFS
+  if (!SPIFFS.begin(true))
+  {
+    Serial.println("An Error has occurred while mounting SPIFFS");
+    return;
+  }
 
-  // Print ESP32 local IP address
+  // Connect to Wi-Fi
+  WiFi.softAP(ssid, password);
+  Serial.println(WiFi.softAPIP());
+  server.begin();
+
+  // Print ESP32 Local IP Address
   Serial.println(WiFi.localIP());
 
-  // Define routes for your web server
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(200, "text/html", "<h1>Micromouse greets you!</h1>");
-  });
+  // Route for root / web page
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) { request->send(SPIFFS, "/index.html"); });
+  server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request) { request->send(SPIFFS, "/style.css", "text/css"); });
 
   // Start server
   server.begin();
 }
 
-void loop() {
-  // Handle client connections and other tasks here
+void loop()
+{
 }
