@@ -1,45 +1,55 @@
-// Import required libraries
+#include "config.h"
 #include <DNSServer.h>
-#include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <SPIFFS.h>
+#include "micromouse.hpp"
 
-// Replace with your network credentials
-const char *ssid = "Micromouse";
-const char *password = "htxmoment";
+// ==================================== Variables ====================================
+AsyncWebServer server(http_port);
+DNSServer dns;
+Micromouse micromouse = Micromouse();
 
-// Create AsyncWebServer object on port 80
-AsyncWebServer server(80);
 
 void setup()
 {
-  // Serial port for debugging purposes
+  // ==================================== Serial ====================================
   Serial.begin(115200);
 
-  // Initialize SPIFFS
+  // ==================================== SPIFFS ====================================
   if (!SPIFFS.begin(true))
   {
     Serial.println("An Error has occurred while mounting SPIFFS");
     return;
   }
 
-  // Connect to Wi-Fi
+  // ==================================== WiFi + DNS ====================================
   WiFi.softAP(ssid, password);
-  Serial.println(WiFi.softAPIP());
-  server.begin();
+  WiFi.softAPConfig(local_ip, gateway, subnet);
+  dns.start(dns_port, "*", local_ip);
+  Serial.println("IP Address: " + WiFi.softAPIP().toString());
 
-  // Print ESP32 Local IP Address
-  Serial.println(WiFi.localIP());
+  micromouse.Initialize();
 
-  // Route for root / web page
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) { request->send(SPIFFS, "/index.html"); });
+
+  // ==================================== ASSETS ====================================
   server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request) { request->send(SPIFFS, "/style.css", "text/css"); });
+  server.on("/main.js", HTTP_GET, [](AsyncWebServerRequest *request) { request->send(SPIFFS, "/main.js", "text/javascript"); });
 
-  // Start server
+  // ==================================== ROUTES ====================================
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) { request->send(SPIFFS, "/index.html", "text/html"); });
+
+  server.on("/calibrate_on", HTTP_GET, [](AsyncWebServerRequest *request) { micromouse.SetCalibrationMode(true); request->send(SPIFFS, "/index.html", "text/html"); });
+  server.on("/calibrate_off", HTTP_GET, [](AsyncWebServerRequest *request) { micromouse.SetCalibrationMode(false); request->send(SPIFFS, "/index.html", "text/html"); });
+
+  
   server.begin();
+  Serial.println("Web server started");
+
+
 }
 
 void loop()
 {
+  micromouse.Update();
 }
