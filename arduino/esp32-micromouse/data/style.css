@@ -29,3 +29,22 @@ p {
 .button-green {
   background-color: #4caf50;
 }
+.button-blue {
+  background-color: #008cba;
+}
+
+.grid-container {
+  margin-left: 25%;
+  margin-right: 25%;
+  height: auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 0px;
+  padding: 10px;
+}
+
+.grid-item {
+  border: 2px solid rgba(0, 0, 0, 0.8);
+  font-size: 48px;
+  text-align: center;
+}

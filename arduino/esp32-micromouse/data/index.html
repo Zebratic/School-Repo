@@ -6,30 +6,29 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script src="joystick.js"></script>
 </head>
 <body>
   <h1>Micromouse Greets You! 🐁</h1>
 
-  <h1 style="text-align:center">
-    <p style="text-align: center;">
-      X: <span id="x_coordinate"> </span>
-      Y: <span id="y_coordinate"> </span>
-      Speed: <span id="speed"> </span> %
-      Angle: <span id="angle"> </span>
-    </p>
-  </h1>
-  <canvas id="canvas" name="game"></canvas>
+  <p>Calibration Mode</p>
+  <p><button class="button button-green" onclick="sendMessage({'calibration_mode': 'on'})">ON</button></p>
+  <p><button class="button button-red" onclick="sendMessage({'calibration_mode': 'off'})">OFF</button></p>
+  <p><button class="button" onclick="sendMessage({'calibration_mode': 'reset'})">Reset</button></p>
 
-  <p>Calibration Mode:</p>
-  <p><button class="button button-green" onclick="sendMessage('calibrate_on')">ON</button></p>
-  <p><button class="button button-red" onclick="sendMessage('calibrate_off')">OFF</button></p>
-  <p><button class="button" onclick="sendMessage('calibrate_reset')">RESET</button></p>
 
-  <!-- Manual Control -->
-  <p>Manual Control Mode:</p>
-  <p><button class="button button-green" onclick="sendMessage('manual_on')">ON</button></p>
-  <p><button class="button button-red" onclick="sendMessage('manual_off')">OFF</button></p>
-
+  <h1>Manuel Mode</h1>
+  <p><button id="manual-mode-button" mode="auto" class="button">Auto</button></p>
+  <div class="grid-container">
+    <div id="controller-button" dir="forward-left" class="grid-item button button-green">🡴</button></div>
+    <div id="controller-button" dir="forward" class="grid-item button button-green">🡱</button></div>
+    <div id="controller-button" dir="forward-right" class="grid-item button button-green">🡵</button></div>
+    <div id="controller-button" dir="left" class="grid-item button button-green">🡸</button></div>
+    <div id="controller-button" dir="stop" class="grid-item button button-red">⏹</button></div>
+    <div id="controller-button" dir="right" class="grid-item button button-green">🡺</button></div>
+    <div id="controller-button" dir="backward-left" class="grid-item button button-green">🡷</button></div>
+    <div id="controller-button" dir="backward" class="grid-item button button-green">🡳</button></div>
+    <div id="controller-button" dir="backward-right" class="grid-item button button-green">🡶</button></div>
+  </div>
+  <script src="joystick.js"></script>
 </body>
 </html>

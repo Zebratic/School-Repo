@@ -4,12 +4,14 @@
 #include <ESPAsyncWebServer.h>
 #include <SPIFFS.h>
 #include "micromouse.hpp"
+#include <Arduino_JSON.h>
 
 // ==================================== Variables ====================================
 AsyncWebServer server(http_port);
 DNSServer dns;
 Micromouse micromouse = Micromouse();
 AsyncWebSocket ws("/ws");
+JSONVar json;
 unsigned long lastTime = 0;
 unsigned long timerDelay = 30000;
 
@@ -17,7 +19,66 @@ unsigned long timerDelay = 30000;
 void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
   AwsFrameInfo *info = (AwsFrameInfo*)arg;
   if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
-    ws.textAll("I got your text message: " + String((char*)data));
+    try
+    {
+      data[len] = 0;
+      String msg = (char*)data;
+      Serial.println(msg);
+      json = JSON.parse(msg);
+
+
+      // ==================================== CALIBRATION ====================================
+      // {'calibration_mode':'on'} // can be on, off, reset
+      if (json.hasOwnProperty("calibration_mode"))
+      {
+        const char* calibration_mode = json["calibration_mode"];
+        if (strcmp(calibration_mode, "on") == 0)
+        {
+          micromouse.SetCalibrationMode(true);
+          Serial.println("Calibration mode on");
+        }
+        else if (strcmp(calibration_mode, "off") == 0)
+        {
+          micromouse.SetCalibrationMode(false);
+          Serial.println("Calibration mode off");
+        }
+        else if (strcmp(calibration_mode, "reset") == 0)
+        {
+          micromouse.ResetCalibration();
+          Serial.println("Calibration reset");
+        }
+      }
+
+      // ==================================== MANUAL MODE TOGGLE ====================================
+      // { manual: 'on' }
+      if (json.hasOwnProperty("manual"))
+      {
+        // if manual is true, set manual mode to true
+        const char* manual = json["manual"];
+        if (strcmp(manual, "on") == 0)
+        {
+          micromouse.SetManualMode(true);
+          Serial.println("Manual mode on");
+        }
+        else if (strcmp(manual, "off") == 0)
+        {
+          micromouse.SetManualMode(false);
+          Serial.println("Manual mode off");
+        }
+      }
+
+      // ==================================== MANUAL DIRECTION ====================================
+      // {"dir":"forward"}
+      if (json.hasOwnProperty("dir"))
+      {
+        const char* dir = json["dir"];
+        micromouse.SetDirection(dir);
+      }
+    }
+    catch(const std::exception& e)
+    {
+      Serial.println(e.what());
+    }
   }
 }
 
@@ -63,11 +124,6 @@ void setup()
   server.on("/joystick.js", HTTP_GET, [](AsyncWebServerRequest *request) { request->send(SPIFFS, "/joystick.js", "text/javascript"); });
 
   // ==================================== ROUTES ====================================
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) { request->send(SPIFFS, "/index.html", "text/html"); });
-  server.on("/calibrate_on", HTTP_GET, [](AsyncWebServerRequest *request) { micromouse.SetCalibrationMode(true); request->send(SPIFFS, "/index.html", "text/html"); });
-  server.on("/calibrate_off", HTTP_GET, [](AsyncWebServerRequest *request) { micromouse.SetCalibrationMode(false); request->send(SPIFFS, "/index.html", "text/html"); });
-  server.on("/calibrate_reset", HTTP_GET, [](AsyncWebServerRequest *request) { micromouse.ResetCalibration(); request->send(SPIFFS, "/index.html", "text/html"); });
-  
   server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
 
   server.begin();
@@ -80,11 +136,5 @@ void setup()
 void loop()
 {
   micromouse.Update();
-
-  if ((millis() - lastTime) > timerDelay) {
-    ws.textAll("HELLO FROM SERVER!");
-    lastTime = millis();
-  }
-
   ws.cleanupClients();
 }
