@@ -5,13 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-  <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="joystick.js"></script>
 </head>
 <body>
   <h1>Micromouse Greets You! 🐁</h1>
+
+  <h1 style="text-align:center">
+    <p style="text-align: center;">
+      X: <span id="x_coordinate"> </span>
+      Y: <span id="y_coordinate"> </span>
+      Speed: <span id="speed"> </span> %
+      Angle: <span id="angle"> </span>
+    </p>
+  </h1>
+  <canvas id="canvas" name="game"></canvas>
+
   <p>Calibration Mode:</p>
-  <p><a href="/calibrate_on"><button class="button">ON</button></a></p>
-  <p><a href="/calibrate_off"><button class="button button2">OFF</button></a></p>
+  <p><button class="button button-green" onclick="sendMessage('calibrate_on')">ON</button></p>
+  <p><button class="button button-red" onclick="sendMessage('calibrate_off')">OFF</button></p>
+  <p><button class="button" onclick="sendMessage('calibrate_reset')">RESET</button></p>
+
+  <!-- Manual Control -->
+  <p>Manual Control Mode:</p>
+  <p><button class="button button-green" onclick="sendMessage('manual_on')">ON</button></p>
+  <p><button class="button button-red" onclick="sendMessage('manual_off')">OFF</button></p>
+
 </body>
 </html>

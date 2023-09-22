@@ -4,7 +4,7 @@
 
 
 // ==================================== Network ====================================
-const char *ssid = "Micromouse";
+const char *ssid = "Micromouse X";
 const char *password = "htxmoment";
 IPAddress local_ip(192, 168, 4, 1);
 IPAddress gateway(255, 255, 255, 0);

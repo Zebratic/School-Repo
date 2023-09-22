@@ -22,7 +22,6 @@ class Micromouse {
 
         void Update()
         {
-
             if (calibration_mode)
                 CalibrateSensors();
             else
@@ -40,6 +39,16 @@ class Micromouse {
 
         // ==================================== CALIBRATOR ====================================
         void SetCalibrationMode(bool mode) { calibration_mode = mode; };
+        void ResetCalibration()
+        {
+            ldr_l_min = 4095;
+            ldr_l_max = 0;
+            ldr_m_min = 4095;
+            ldr_m_max = 0;
+            ldr_r_min = 4095;
+            ldr_r_max = 0;
+            Serial.println("Calibration reset");
+        }
 
         void CalibrateSensors()
         {
@@ -64,7 +73,38 @@ class Micromouse {
         // ==================================== SCANNER ====================================
         void CalculateMove()
         {
-            int* ldr = ReadLightSensors();
+            int ldr_l_min_sens = 1.2; 
+            int ldr_m_min_sens = 1.2; 
+            int ldr_r_min_sens = 1.2; 
+            int* ldr_values = ReadLightSensors();
+            // ldr_values[0] // left ldr
+            // ldr_values[1] // middle ldr
+            // ldr_values[2] // right ldr
+            if(ldr_values[0] < ldr_l_min * ldr_l_min_sens)
+            {
+                //steer right
+                
+                
+            }
+
+            else if (ldr_values[1] > ldr_m_min * ldr_m_min_sens)
+            {
+                //we are fuck if this is true
+            }
+
+            else if (ldr_values[2] < ldr_r_min * ldr_r_min_sens)
+            {
+                //steer left
+            }
+
+            else
+            {
+                // drive forward
+            }
+
+
+            // logic here
+          
         }
         
         int* ReadLightSensors()
