@@ -15,10 +15,10 @@ const int dns_port = 53;
 
 
 // ==================================== PINS ====================================
-const int PWM_R_MOTOR_PIN = 16;
+const int PWM_R_MOTOR_PIN = 19;
 const int PWM_L_MOTOR_PIN = 17;
 
-const int DIR_R_MOTOR_PIN = 19;
+const int DIR_R_MOTOR_PIN = 16;
 const int DIR_L_MOTOR_PIN = 18;
 
 const int LDR_L_PIN = 32;

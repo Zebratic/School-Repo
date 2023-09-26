@@ -3,17 +3,18 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <SPIFFS.h>
-#include "micromouse.hpp"
 #include <Arduino_JSON.h>
 
 // ==================================== Variables ====================================
 AsyncWebServer server(http_port);
 DNSServer dns;
-Micromouse micromouse = Micromouse();
 AsyncWebSocket ws("/ws");
+#include "micromouse.hpp"
+Micromouse micromouse = Micromouse();
 JSONVar json;
 unsigned long lastTime = 0;
 unsigned long timerDelay = 30000;
+
 
 // ==================================== WebSocket ====================================
 void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
@@ -35,17 +36,17 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         if (strcmp(calibration_mode, "on") == 0)
         {
           micromouse.SetCalibrationMode(true);
-          Serial.println("Calibration mode on");
+          SerialPrint("Calibration mode on");
         }
         else if (strcmp(calibration_mode, "off") == 0)
         {
           micromouse.SetCalibrationMode(false);
-          Serial.println("Calibration mode off");
+          SerialPrint("Calibration mode off");
         }
         else if (strcmp(calibration_mode, "reset") == 0)
         {
           micromouse.ResetCalibration();
-          Serial.println("Calibration reset");
+          SerialPrint("Calibration reset");
         }
       }
 
@@ -58,12 +59,12 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         if (strcmp(manual, "on") == 0)
         {
           micromouse.SetManualMode(true);
-          Serial.println("Manual mode on");
+          SerialPrint("Manual mode on");
         }
         else if (strcmp(manual, "off") == 0)
         {
           micromouse.SetManualMode(false);
-          Serial.println("Manual mode off");
+          SerialPrint("Manual mode off");
         }
       }
 
@@ -74,10 +75,37 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         const char* dir = json["dir"];
         micromouse.SetDirection(dir);
       }
+
+
+      // ==================================== DRIVE ====================================
+      // {"sh"ould_drive":"on"}
+      if (json.hasOwnProperty("should_drive"))
+      {
+        const char* should_drive = json["should_drive"];
+        if (strcmp(should_drive, "on") == 0)
+        {
+          micromouse.SetShouldDrive(true);
+          SerialPrint("Driving = ON");
+        }
+        else if (strcmp(should_drive, "off") == 0)
+        {
+          micromouse.SetShouldDrive(false);
+          SerialPrint("Driving = OFF");
+        }
+      }
+
+      // ==================================== SPEED ====================================
+      // {"set_speed": "75"}
+      if (json.hasOwnProperty("set_speed"))
+      {
+        int set_speed = json["set_speed"];
+        micromouse.SetNormalMotorSpeed(set_speed);
+        SerialPrint("Speed set to " + String(set_speed));
+      }
     }
     catch(const std::exception& e)
     {
-      Serial.println(e.what());
+      SerialPrint(e.what());
     }
   }
 }
@@ -101,7 +129,7 @@ void setup()
   // ==================================== SPIFFS ====================================
   if (!SPIFFS.begin(true))
   {
-    Serial.println("An Error has occurred while mounting SPIFFS");
+    SerialPrint("An Error has occurred while mounting SPIFFS");
     return;
   }
 
@@ -109,7 +137,7 @@ void setup()
   WiFi.softAP(ssid, password);
   WiFi.softAPConfig(local_ip, gateway, subnet);
   dns.start(dns_port, "*", local_ip);
-  Serial.println("IP Address: " + WiFi.softAPIP().toString());
+  SerialPrint("IP Address: " + WiFi.softAPIP().toString());
 
   // ==================================== Micromouse ====================================
   micromouse.Initialize();
@@ -117,7 +145,7 @@ void setup()
   // ==================================== WebSocket ====================================
   ws.onEvent(onEvent);
   server.addHandler(&ws);
-  Serial.println("WebSocket server started");
+  SerialPrint("WebSocket server started");
 
   // ==================================== ASSETS ====================================
   server.on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request) { request->send(SPIFFS, "/style.css", "text/css"); });
@@ -127,7 +155,7 @@ void setup()
   server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
 
   server.begin();
-  Serial.println("Web server started");
+  SerialPrint("Web server started");
 }
 
 

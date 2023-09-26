@@ -15,9 +15,12 @@
   <p><button class="button button-red" onclick="sendMessage({'calibration_mode': 'off'})">OFF</button></p>
   <p><button class="button" onclick="sendMessage({'calibration_mode': 'reset'})">Reset</button></p>
 
+  <p>Drive Switch</p>
+  <p><button id="should-drive-button" mode="on" class="button button-red">Stop Driving</button></p>
+  <p>Speed: <input type="text" class="slider" id="speed-slider" value="255" min="0" max="255" step="1" oninput="sendMessage({'set_speed': parseInt(this.value)})"></p>
 
   <h1>Manuel Mode</h1>
-  <p><button id="manual-mode-button" mode="auto" class="button">Auto</button></p>
+  <p><button id="manual-mode-button" mode="manual" class="button button-green">Manual</button></p>
   <div class="grid-container">
     <div id="controller-button" dir="forward-left" class="grid-item button button-green">🡴</button></div>
     <div id="controller-button" dir="forward" class="grid-item button button-green">🡱</button></div>
@@ -30,5 +33,9 @@
     <div id="controller-button" dir="backward-right" class="grid-item button button-green">🡶</button></div>
   </div>
   <script src="joystick.js"></script>
+
+  
+  <h1>Serial Output</h1>
+  <textarea id="serial-output" rows="10"></textarea>
 </body>
 </html>

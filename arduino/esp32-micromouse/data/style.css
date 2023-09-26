@@ -48,3 +48,9 @@ p {
   font-size: 48px;
   text-align: center;
 }
+
+#serial-output {
+  font-size: 1.5rem;
+  padding: 2vh;
+  width: 100%;
+}

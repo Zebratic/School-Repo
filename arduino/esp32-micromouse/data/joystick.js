@@ -7,6 +7,20 @@ connection.onerror = function (error) {
 };
 connection.onmessage = function (e) {
     console.log('Server: ', e.data);
+    var data = JSON.parse(e.data);
+    // String json = "{\"type\":\"log\",\"value\":\"" + String(value) + "\"}";
+
+    if (data.type == 'log') {
+        // append to id="serial-output" (max 1000 lines)
+        var output = document.querySelector('#serial-output');
+        var lines = output.innerHTML.split('\n');
+        if (lines.length > 1000) {
+            lines.shift();
+        }
+        lines.push(data.value);
+        output.innerHTML = lines.join('\n');
+        output.scrollTop = output.scrollHeight;
+    }
 };
 connection.onclose = function () {
     // retry connection after 1 second
@@ -23,6 +37,7 @@ function send(data) {
 
 function sendMessage(data) {
     data = JSON.stringify(data);
+    console.log("Sending: " + data);
     connection.send(data);
 }
 
@@ -50,5 +65,25 @@ document.querySelector('#manual-mode-button').addEventListener('click', function
         button.setAttribute('mode', 'manual');
         button.classList.add('button-green');
         button.innerHTML = 'Manual';
+    }
+});
+
+// #should-drive-button
+document.querySelector('#should-drive-button').addEventListener('click', function (e) {
+    e.preventDefault();
+    var button = document.querySelector('#should-drive-button');
+    var mode = button.getAttribute('mode');
+    if (mode == 'on') {
+        sendMessage({ "should_drive": 'off' });
+        button.setAttribute('mode', 'off');
+        button.classList.remove('button-red');
+        button.classList.add('button-green');
+        button.innerHTML = 'Start Driving';
+    } else {
+        sendMessage({ "should_drive": 'on' });
+        button.setAttribute('mode', 'on');
+        button.classList.remove('button-green');
+        button.classList.add('button-red');
+        button.innerHTML = 'Stop Driving';
     }
 });
