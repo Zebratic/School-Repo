@@ -18,7 +18,6 @@ app.use((req, res, next) => {
     // if url is empty
     if (url === '')
         url = 'index';        
-    
 
     // check if file exists
     if (!require('fs').existsSync('./pages/' + url + '.ejs')) {
