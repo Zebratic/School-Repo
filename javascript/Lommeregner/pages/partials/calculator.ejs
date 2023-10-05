@@ -1,0 +1,58 @@
+<div class="flex flex-wrap">
+    <div class="calc">
+        <div class="calc-output">0</div>
+        <div class="calc-keys">
+            <button value="+" class="calc-key calc-key-operator">+</button>
+            <button value="-" class="calc-key calc-key-operator">-</button>
+            <button value="×" class="calc-key calc-key-operator">×</button>
+            <button value="÷" class="calc-key calc-key-operator">÷</button>
+            <button value="7" class="calc-key">7</button>
+            <button value="8" class="calc-key">8</button>
+            <button value="9" class="calc-key">9</button>
+            <button value="4" class="calc-key">4</button>
+            <button value="5" class="calc-key">5</button>
+            <button value="6" class="calc-key">6</button>
+            <button value="1" class="calc-key">1</button>
+            <button value="2" class="calc-key">2</button>
+            <button value="3" class="calc-key">3</button>
+            <button value="0" class="calc-key">0</button>
+            <button value="." class="calc-key">.</button>
+            <button value="AC" class="calc-key">AC</button>
+            <button value="=" class="calc-key calc-key-enter">=</button>
+        </div>
+
+        <script>
+            var calc = new Calculator();
+
+            // on button click get value and run it to the screen
+            document.querySelectorAll('.calc-key').forEach(function(key) {
+                key.addEventListener('click', onButtonClick);
+            });
+
+            function onButtonClick(e) {
+                var value = e.target.value;
+                console.log("INPUT: " + value);
+                switch (value) {
+                    case 'AC': calc.Clear(); document.querySelector('.calc-output').innerHTML = 0; break;
+                    case '=': document.querySelector('.calc-output').innerHTML = calc.GetResult(); break;
+                    case '+': calc.SetOperator('+'); break;
+                    case '-': calc.SetOperator('-'); break;
+                    case '×': calc.SetOperator('×'); break;
+                    case '÷': calc.SetOperator('÷'); break;
+
+                    default:
+                        // if current value is 0, replace it. if not add to it
+                        var currentValue = calc.GetCurrentNumber(); 
+                        if (currentValue == 0)
+                            calc.SetNumber(value);
+                        else
+                            calc.AddNumber(value);
+
+                        document.querySelector('.calc-output').innerHTML = calc.GetCurrentNumber();
+                        console.log("CURRENT: " + calc.GetCurrentNumber());
+                        break;
+                }
+            }
+        </script>
+    </div>
+</div>

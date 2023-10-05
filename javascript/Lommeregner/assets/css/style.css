@@ -1,0 +1,81 @@
+/* ================= MAIN STYLES ================= */
+body {
+  background:rgba(0, 0, 0, 0.80)
+}
+
+
+
+
+
+/* ================= CALCULATOR STYLES ================= */
+.calc {
+  border-radius: 20px;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15), 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  margin-block-start: 2em;
+  max-inline-size: 22rem;
+  overflow: hidden;
+  color: hsl(255, 100%, 100%);
+}
+
+.calc-output {
+  background: rgb(20 20 20);
+  font-size: 4.2rem;
+  padding-block-start: 3rem;
+  padding-block-end: 0.5rem;
+  padding-inline-end: 1.25rem;
+  text-align: end;
+}
+
+.calc-keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1px;
+  background: rgb(0, 0, 0);
+  padding: 0.5rem;
+}
+
+.calc-key {
+  background: rgb(31, 34, 35);
+  color: hsl(255, 100%, 100%);
+  border: none;
+  padding-block-start: 1rem;
+  padding-block-end: 1rem;
+  padding-inline-end: 1.25rem;
+  padding-inline-start: 1.25rem;
+  font-size: 1.5rem;
+  inline-size: 70px;
+  block-size: 70px;
+  margin: 0.25rem;
+  border-radius: 40px;
+}
+
+.calc-key:active {
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3) inset;
+  outline: none;
+  transition: all 0.1s ease-in-out;
+  transform: scale(0.95);
+}
+
+.calc-key-operator {
+  background: rgb(44, 48, 50);
+}
+
+.calc-key-operator:active {
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3) inset;
+  outline: none;
+  transition: all 0.1s ease-in-out;
+  background: rgb(43, 57, 69);
+}
+
+.calc-key-enter {
+  grid-column: 4 / 5;
+  grid-row: 2 / span 4;
+  background: rgb(137, 0, 7);
+  height: auto;
+}
+
+.calc-key-enter:active {
+  background: rgb(162, 0, 8);
+}
