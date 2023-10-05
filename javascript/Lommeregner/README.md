@@ -8,10 +8,6 @@
 
 ---
 
-# Source kode
-
-Den fule source kode kan tjekkes igennem på GitHub:
-
 # Express Server
 
 Hjemmesiden styres af en Node.js Express-server, som fungerer som baggrundsserveren til lommeregneren. Denne server håndterer forespørgsler og leverer de filer der er nødvendigt for at lommeregneren kan loades lokalt på brugerens browser.
