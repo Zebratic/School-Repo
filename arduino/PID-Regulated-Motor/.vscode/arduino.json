@@ -1,0 +1,5 @@
+{
+    "board": "arduino:avr:uno",
+    "sketch": "PID-Regulated-Motor.ino",
+    "port": "/dev/ttyACM0"
+}
