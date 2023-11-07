@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
-    "port": "COM4",
-    "sketch": "arduino\\micromouse\\micromouse.ino"
+    "port": "/dev/ttyACM0",
+    "sketch": "arduino/PID-Regulated-Motor-Teacher/HastReg.ino"
 }
