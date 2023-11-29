@@ -63,7 +63,7 @@ function SkemaMonitor()
     if (skemahtml != lastskemahtml)
     {
         LoadSkema();
-        FixCSS(); // part of darkmode.js
+        FixCSS();
         lastskemahtml = skemahtml;
     }
 
@@ -71,10 +71,12 @@ function SkemaMonitor()
     setTimeout(SkemaMonitor, 100);
 }
 
-
-
-
-
+function FixCSS()
+{
+    let html = document.getElementsByTagName("head")[0].innerHTML;
+    html = html.replaceAll("!important", "");
+    document.getElementsByTagName("head")[0].innerHTML = html;
+}
 
 
 // setup mouse event

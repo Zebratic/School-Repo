@@ -3,15 +3,21 @@
     "name": "AarhusTech++",
     "description": "Gør din oplevelse med Aarhus Tech's hjemmesider bedre!",
     "version": "1.0",
+    "web_accessible_resources": [{
+        "resources": ["scripts/modules/intercepter.js"],
+        "matches": ["<all_urls>"]
+    }],
     "icons": {
         "16": "images/icon.png",
         "48": "images/icon.png",
         "128": "images/icon.png"
     },
     "permissions": [
-        "tabs",
+        "activeTab",
         "scripting",
-        "activeTab"
+        "declarativeNetRequest",
+        "declarativeNetRequestFeedback",
+        "tabs"
     ],
     "action": {
         "default_popup": "popup.html",
@@ -27,19 +33,21 @@
     "content_scripts": [
         {
             "matches": ["*://selvbetjening.aarhustech.dk/WebTimeTable/default.aspx*"],
-            "js": [
-                "scripts/BedreSkema.js",
-                "scripts/darkmode.js"
-            ],
-            "css": [
-                "styles/darkmode.css"
-            ]
+            "js": ["scripts/modules/BedreSkema.js"],
+            "css": ["styles/darkmode.css"]
+        },
+        {
+            "matches": ["*://app.minlaering.dk/bog/*/kapitel/*/sektion/*"],
+            "js": ["scripts/modules/MinLaering.js"],
+            "css": []
         }
     ],
     "host_permissions": [
         "https://*.aarhustech.dk/*",
         "https://aarhustech.dk/*",
         "https://*.itslearning.com/*",
-        "https://itslearning.com/*"
+        "https://itslearning.com/*",
+        "https://*.minlaering.dk/*",
+        "https://minlaering.dk/*"
     ]
 }
