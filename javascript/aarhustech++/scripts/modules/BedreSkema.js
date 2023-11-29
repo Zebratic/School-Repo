@@ -57,7 +57,7 @@ window.onload = SkemaMonitor;
 
 var lastskemahtml = "";
 function SkemaMonitor()
-{
+{   
     let skemahtml = document.getElementById("HeaderTable").innerHTML;
 
     if (skemahtml != lastskemahtml)
