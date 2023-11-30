@@ -23,7 +23,7 @@ function GetAnswer(book_id, section_id, exercise_question_id, exercise_question_
         return;
     }
 
-    console.log("[MinLaering Mod] Searching for BOOK:" + book_id + " SECTION:" + section_id + " EXERCISE:" + exercise_question_id + " TASK:" + exercise_question_task_id);
+    //console.log("[MinLaering Mod] Searching for BOOK:" + book_id + " SECTION:" + section_id + " EXERCISE:" + exercise_question_id + " TASK:" + exercise_question_task_id);
 
     var book_id_int = parseInt(book_id.split('-')[1]); // section-XXXXX
     var section_id_int = parseInt(section_id.split('-')[1]); // section-XXXXX
@@ -66,6 +66,12 @@ function GetAnswer(book_id, section_id, exercise_question_id, exercise_question_
 
     switch (task.type.machine_name) {
         case "clickword": {
+            var options_text = task.conf.options.find(x => x.is_correct === true).option;
+            answer.options.push(options_text);            
+            return answer;
+        }
+
+        case "multiplechoice": {
             var options_text = task.conf.options.find(x => x.is_correct === true).option;
             answer.options.push(options_text);            
             return answer;
@@ -146,6 +152,28 @@ function FindAllSectionsAndQuestions() {
                     break;
                 }
 
+                case "multiplechoice": {
+                    for (var k = 0; k < answer.options.length; k++)
+                    {
+                        var correct_option = answer.options[k];
+                    
+                        // find div that has .option as its text content, and make it green
+                        var clickable_sections = exercise_question_task.getElementsByClassName("multiple-choice-option");
+                        for (var l = 0; l < clickable_sections.length; l++) {
+                            var clickable_section = clickable_sections[l];
+                            // get class multiple-choice-title and then get text content from that
+                            var multiple_choice_title = clickable_section.getElementsByClassName("multiple-choice-title")[0];
+                            var multiple_choice_title_text = multiple_choice_title.textContent;
+                            if (multiple_choice_title_text == " " + correct_option + " ") {
+                                // class="multiple-choice-letter
+                                var multiple_choice_letter = clickable_section.getElementsByClassName("multiple-choice-letter")[0];
+                                multiple_choice_letter.setAttribute("style", "background-color: #AC4303;");
+                            }
+                        }
+                    }
+                    break;
+                }
+
                 case "dropdown": {
                     /*
                     <div class="dropdown-items"><div class="dropdown-item is-flex is-flex-wrap-nowrap is-align-items-center is-clickable is-size-7"><svg data-v-2e57dc73="" class="base-checkbox is-flex-shrink-0 mr-4 is-active has-background-blue is-medium"><use data-v-2e57dc73="" xlink:href="/img/icons.125a1316.svg#icon-checkbox-active"></use></svg><span class=""> - </span></div><div class="dropdown-item is-flex is-flex-wrap-nowrap is-align-items-center is-clickable is-size-7"><svg data-v-2e57dc73="" class="base-checkbox is-flex-shrink-0 mr-4 has-background-grey-lighterer is-medium"><use data-v-2e57dc73="" xlink:href="/img/icons.125a1316.svg#icon-checkbox-"></use></svg><span class=""> Gendrivelse 1 </span></div><div class="dropdown-item is-flex is-flex-wrap-nowrap is-align-items-center is-clickable is-size-7"><svg data-v-2e57dc73="" class="base-checkbox is-flex-shrink-0 mr-4 has-background-grey-lighterer is-medium"><use data-v-2e57dc73="" xlink:href="/img/icons.125a1316.svg#icon-checkbox-"></use></svg><span class=""> Gendrivelse 2 </span></div></div>
@@ -171,7 +199,7 @@ function FindAllSectionsAndQuestions() {
                 }
 
                 default: {
-                    console.log("[MinLaering Mod] Unknown question type");
+                    console.log("[MinLaering Mod] Unsupported question type: " + answer.type);
                     continue;
                 }
             }
