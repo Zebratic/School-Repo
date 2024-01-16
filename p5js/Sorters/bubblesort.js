@@ -1,6 +1,9 @@
 let values = [];
 let i = 0;
 let j = 0;
+let randomizeButton;
+let sorted = false;
+let greenColor;
 
 function setup() {
     createCanvas(400, 400);
@@ -9,6 +12,10 @@ function setup() {
         values[i] = random(height);
     }
     frameRate(60); // Adjust the frame rate to slow down the animation
+    
+    randomizeButton = createButton('Randomize');
+    randomizeButton.position(10, 10);
+    randomizeButton.mousePressed(randomizeValues);
 }
 
 function draw() {
@@ -23,10 +30,13 @@ function draw() {
             }
         }
     } else {
-        console.log("Finished sorting");
-        noLoop();
+        if (!sorted) {
+            console.log("Finished sorting");
+            sorted = true;
+        }
         for (let i = values.length - 1; i >= 0; i--) {
-            stroke(0, 255, 0);
+            greenColor = lerpColor(color(0, 255, 0, 0), color(0, 255, 0, 255), map(i, 0, values.length - 1, 0, 1));
+            stroke(greenColor);
             line(i, height, i, height - values[i]);
         }
     }
@@ -47,4 +57,16 @@ function swap(arr, a, b) {
     let temp = arr[a];
     arr[a] = arr[b];
     arr[b] = temp;
+}
+
+function randomizeValues() {
+    // restart
+    i = 0;
+    j = 0;
+    sorted = false;
+    values = new Array(width);
+    for (let i = 0; i < values.length; i++) {
+        values[i] = random(height);
+    }
+    loop();
 }
