@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agar with Guns</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js" integrity="sha512-uaz5GpnQoE6t5echKlX8P52czvsIGgLPcvlzfvRubLZ1Hp8JemUDnbUiAahbVtPb+jUVrNETuXvAhDDF/N3M4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js" integrity="sha512-WzkwpdWEMAY/W8WvP9KS2/VI6zkgejR4/KTxTl4qHx0utqeyVE0JY+S1DlMuxDChC7x0oXtk/ESji6a0lP/Tdg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        // Import the io object from the socket.io library
+        var wsuri = (window.location.protocol == 'http:' ? 'ws://' : 'wss://') + window.location.host + '/ws';
+
+        var circleX = 0;
+        var circleY = 0;
+        var circleSpeed = 2;
+
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+            // Initialize WebSocket connection
+            const socket = new WebSocket(wsuri);
+
+            // Handle WebSocket events
+            socket.onopen = function() {
+                console.log('Connected to server');
+            };
+
+            socket.onclose = function() {
+                console.log('Disconnected from server');
+            };
+
+            socket.onmessage = function(event) {
+                console.log('Received message:', event.data);
+                // Process the received message
+                var message = JSON.parse(event.data);
+                // Example: updateGame(message);
+                if (message.type === 'circleSpeed') {
+                    circleSpeed = message.speed;
+                }
+            };
+
+            // Send player movement data to the server
+            function sendPlayerMovement(x, y) {
+                socket.send(JSON.stringify({ x, y }));
+            }
+
+            // Handle player movement
+            function handlePlayerMovement() {
+                // Your player movement logic here
+                // Example: sendPlayerMovement(player.x, player.y);
+            }
+
+            // Your game logic here
+            function updateGame(message) {
+                // Update the game based on the received message
+                // Example: if (message.type === 'playerMovement') { handlePlayerMovement(message.x, message.y); }
+            }
+
+        }
+
+        function draw() {
+            background(220);
+            // Move the circle towards the mouse with the set speed
+            var dx = mouseX - circleX;
+            var dy = mouseY - circleY;
+            var distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance > circleSpeed) {
+                var ratio = circleSpeed / distance;
+                circleX += dx * ratio;
+                circleY += dy * ratio;
+            } else {
+                circleX = mouseX;
+                circleY = mouseY;
+            }
+            // Draw the circle
+            fill(255, 0, 0);
+            circle(circleX, circleY, 50);
+        }
+
+        // Welcome message and player data
+        var welcomeMessage = {"type":"welcome","players":[{"name":"Player","x":834.5680443481274,"y":106.93331369071934,"health":100,"maxHealth":100,"weapon":{"name":"Pistol","damage":10,"range":100,"firingRate":1,"ammo":10,"maxAmmo":10},"localplayer":true}]};
+        updateGame(welcomeMessage);
+
+    </script>
+</body>
+</html>
