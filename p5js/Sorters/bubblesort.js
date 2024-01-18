@@ -33,6 +33,7 @@ function draw() {
         if (!sorted) {
             console.log("Finished sorting");
             sorted = true;
+            setTimeout(restartSorting, 3000); // Restart sorting after 3 seconds
         }
         for (let i = values.length - 1; i >= 0; i--) {
             greenColor = lerpColor(color(0, 255, 0, 0), color(0, 255, 0, 255), map(i, 0, values.length - 1, 0, 1));
@@ -69,4 +70,8 @@ function randomizeValues() {
         values[i] = random(height);
     }
     loop();
+}
+
+function restartSorting() {
+    randomizeValues();
 }

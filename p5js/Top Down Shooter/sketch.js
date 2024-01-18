@@ -177,5 +177,5 @@ function DrawGame()
     }
     if (keyIsDown(RIGHT_ARROW)) {
         Bullets.push(new Bullet(player.x + 50, player.y + 25, 10, 5, 0));
-    }<
+    }
 }

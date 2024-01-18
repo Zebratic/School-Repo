@@ -1,4 +1,6 @@
 var angle = 0;
+var width = 600;
+var height = 600;
 var funnytexture;
 
 function setup()
