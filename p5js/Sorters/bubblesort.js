@@ -6,7 +6,7 @@ let sorted = false;
 let greenColor;
 
 function setup() {
-    createCanvas(400, 400);
+    createCanvas(800, 800);
     values = new Array(width);
     for (let i = 0; i < values.length; i++) {
         values[i] = random(height);
