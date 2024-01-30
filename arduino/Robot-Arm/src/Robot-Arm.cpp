@@ -7,16 +7,20 @@ class RobotArm {
         int basePin;
         int basePotPin;
         int baseAngle;
-        double baseArmLength = 115.0;
 
         int armPin;
         int armPotPin;
         int armAngle;
-        double armLength = 155.0;
 
     public:
+        double baseArmLength = 115.0;
+        double armLength = 155.0;
+
         Servo BaseMotor;
         Servo ArmMotor;
+
+        float targetX;
+        float targetY;
 
         RobotArm() {
             this->basePin = 0;
@@ -26,8 +30,10 @@ class RobotArm {
 
             this->baseAngle = 0;
             this->armAngle = 0;
+
+            this->targetX = 0;
+            this->targetY = 0;
         }
-    
 
         void setup(int basePin, int basePotPin, int armPin, int armPotPin) {
             this->basePin = basePin;
@@ -41,19 +47,6 @@ class RobotArm {
             BaseMotor.attach(basePin);
             ArmMotor.attach(armPin);
         }
-
-        /*int* getAngles() {
-            // read potentiometers
-            int basePot = analogRead(this->basePotPin);
-            int armPot = analogRead(this->armPotPin);
-
-            // calculate angles
-            this->baseAngle = map(basePot, 0, 1023, 0, 177);
-            this->armAngle = map(armPot, 0, 1023, 0, 177);
-
-            int angles[2] = {this->baseAngle, this->armAngle};
-            return angles;
-        }*/
 
         void move(int angleX, int angleY) {
             BaseMotor.write(angleX);
@@ -80,52 +73,83 @@ class RobotArm {
             // convert to degrees
             V1 = V1 * 180 / PI;
             V5 = V5 * 180 / PI;
-            //print all values'
-            Serial.println("V1: " + String(V1) + " V5: " + String(V5));
-            Serial.println("V3: " + String(V3) + " V4: " + String(V4));
-            Serial.println("L3: " + String(L3));
-            Serial.println("x: " + String(x) + " y: " + String(y));
-            Serial.println("baseArmLength: " + String(this->baseArmLength) + " armLength: " + String(this->armLength));
 
             // move motors
             BaseMotor.write(V5);
             ArmMotor.write(V1);
-            //this->move(V1, V5);
-            Serial.println(V1);
-            Serial.println(V5);
+        }
+};
+
+class Controller {
+    public:
+        int VRyPin;
+        int VRxPin;
+        int SWPin;
+
+        float speed;
+
+        Controller() {
+            this->VRxPin = 0;
+            this->VRyPin = 0;
+            this->SWPin = 0;
+
+            this->speed = 1.0;
         }
 
+        void setup(int VRxPin, int VRyPin, int SWPin, float speed) {
+            this->VRxPin = VRxPin;
+            this->VRyPin = VRyPin;
+            this->SWPin = SWPin;
 
-        /*void printValues() {
-            int* angles = this->getAngles();
-            Serial.print("Base Angle: ");
-            Serial.print(angles[0]);
-            Serial.print(" Arm Angle: ");
-            Serial.println(angles[1]);
-        }*/
+            pinMode(VRxPin, INPUT);
+            pinMode(VRyPin, INPUT);
+            pinMode(SWPin, INPUT);
+
+            this->speed = speed;
+        }
 };
 
 
-
-
-RobotArm robotArm;
+RobotArm robotArm = RobotArm();
+Controller controller = Controller();
 
 void setup() {
-    Serial.begin(115200);
     robotArm.setup(9, A0, 10, A1);
+    controller.setup(A2, A3, 2, 0.01);
+    Serial.begin(115200);
 }
 
 void loop() {
-    int startX = 115; // starting x-coordinate
-    int startY = 120; // starting y-coordinate
-    int endX = 165;   // ending x-coordinate
-    int endY = 170;   // ending y-coordinate
-    int steps = 100;  // number of steps to move
+   int VRx = analogRead(controller.VRxPin);
+   int VRy = analogRead(controller.VRyPin);
+   int SW = digitalRead(controller.SWPin);
 
-    for (int i = 0; i <= steps; i++) {
-        int x = startX + (endX - startX) * i / steps;
-        int y = startY + (endY - startY) * i / steps;
-        robotArm.ikMove(x, y);
-        delay(10); // delay between each step (adjust as needed)
+
+   // 0-1023 to - max arm length to max arm length
+    float x = map(VRx, 0, 1023, -(robotArm.baseArmLength + robotArm.armLength), robotArm.baseArmLength + robotArm.armLength);
+    float y = map(VRy, 0, 1023, -(robotArm.baseArmLength + robotArm.armLength), robotArm.baseArmLength + robotArm.armLength);
+
+    // add deadzone
+    if (x < 10 && x > -10) x = 0;
+    if (y < 10 && y > -10) y = 0;
+
+    // add to target only if changed
+    if (x != 0 || y != 0) {
+        robotArm.targetX += x * controller.speed;
+        robotArm.targetY += y * controller.speed;
     }
+
+    // limit target to max arm length
+    if (robotArm.targetX > robotArm.baseArmLength + robotArm.armLength) robotArm.targetX = robotArm.baseArmLength + robotArm.armLength;
+    if (robotArm.targetX < -(robotArm.baseArmLength + robotArm.armLength)) robotArm.targetX = -(robotArm.baseArmLength + robotArm.armLength);
+    if (robotArm.targetY > robotArm.baseArmLength + robotArm.armLength) robotArm.targetY = robotArm.baseArmLength + robotArm.armLength;
+    if (robotArm.targetY < -(robotArm.baseArmLength + robotArm.armLength)) robotArm.targetY = -(robotArm.baseArmLength + robotArm.armLength);
+
+    Serial.println("X: " + String(robotArm.targetX) + " Y: " + String(robotArm.targetY));
+
+
+    
+    // move arm
+    robotArm.ikMove(robotArm.targetX, robotArm.targetY);
+    delay(10);
 }
