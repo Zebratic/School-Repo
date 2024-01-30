@@ -114,7 +114,7 @@ void loop() {
     // move the end effector to the coordinates (x, y) in a box animation away from the base
     robotArm.ikMove(115, 30);
     delay(1000);
-    robotArm.ikMove(115,90);
+    robotArm.ikMove(160,90);
     delay(1000);
 
 }
