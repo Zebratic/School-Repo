@@ -80,10 +80,16 @@ class RobotArm {
             // convert to degrees
             V1 = V1 * 180 / PI;
             V5 = V5 * 180 / PI;
+            //print all values'
+            Serial.println("V1: " + String(V1) + " V5: " + String(V5));
+            Serial.println("V3: " + String(V3) + " V4: " + String(V4));
+            Serial.println("L3: " + String(L3));
+            Serial.println("x: " + String(x) + " y: " + String(y));
+            Serial.println("baseArmLength: " + String(this->baseArmLength) + " armLength: " + String(this->armLength));
 
             // move motors
-            BaseMotor.write(V1);
-            ArmMotor.write(V5);
+            BaseMotor.write(V5);
+            ArmMotor.write(V1);
             //this->move(V1, V5);
             Serial.println(V1);
             Serial.println(V5);
@@ -109,12 +115,17 @@ void setup() {
     robotArm.setup(9, A0, 10, A1);
 }
 
-
 void loop() {
-    // move the end effector to the coordinates (x, y) in a box animation away from the base
-    robotArm.ikMove(115, 30);
-    delay(1000);
-    robotArm.ikMove(160,90);
-    delay(1000);
+    int startX = 115; // starting x-coordinate
+    int startY = 120; // starting y-coordinate
+    int endX = 165;   // ending x-coordinate
+    int endY = 170;   // ending y-coordinate
+    int steps = 100;  // number of steps to move
 
+    for (int i = 0; i <= steps; i++) {
+        int x = startX + (endX - startX) * i / steps;
+        int y = startY + (endY - startY) * i / steps;
+        robotArm.ikMove(x, y);
+        delay(10); // delay between each step (adjust as needed)
+    }
 }
