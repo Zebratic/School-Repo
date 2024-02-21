@@ -37,7 +37,7 @@ class RobotArm {
     
         // Draw reachable area
         noFill();
-        stroke(255, 0, 0, 30); // Update color to red and opacity to 10%
+        stroke(255, 0, 0, 150); // Update color to red and opacity to 10%
         let reachableRadius = this.segmentLength1 + this.segmentLength2;
         ellipse(this.posX, this.posY, reachableRadius * 2, reachableRadius * 2);
         
@@ -47,6 +47,7 @@ class RobotArm {
 
         // Draw label with coordinates
         fill(0);
+        textSize(20); // Increase the text size to 20
         text(`(${targetX - (width / 2)}, ${-targetY + (height / 2)})`, targetX + 10, targetY + 10);
     }
     
@@ -58,13 +59,13 @@ class RobotArm {
         let a1 = atan2(targetY - this.posY, targetX - this.posX);
         let a2 = acos((this.segmentLength1 * this.segmentLength1 + d * d - this.segmentLength2 * this.segmentLength2) / (2 * this.segmentLength1 * d));
 
-        let jointAngle1 = a1 + a2;
+        let jointAngle1 = a1 - a2;
 
         // Limit jointAngle1 to 180 degrees
         jointAngle1 = min(jointAngle1, 180);
 
         let a3 = acos((this.segmentLength1 * this.segmentLength1 + this.segmentLength2 * this.segmentLength2 - d * d) / (2 * this.segmentLength1 * this.segmentLength2));
-        let jointAngle2 = a3 + 180;
+        let jointAngle2 = -a3 + 180;
 
         // Check if the point can be reached with the current joint angles
         let endEffectorX = this.posX + cos(jointAngle1) * this.segmentLength1 + cos(jointAngle1 + jointAngle2) * this.segmentLength2;
@@ -74,7 +75,7 @@ class RobotArm {
         if (distanceToTarget > 0.1) {
             // Bend the other way and check again
             jointAngle1 = a1 - a2;
-            jointAngle2 = -a3 + 180;
+            jointAngle2 = a3 + 180;
 
             // Recalculate the end effector position
             endEffectorX = this.posX + cos(jointAngle1) * this.segmentLength1 + cos(jointAngle1 + jointAngle2) * this.segmentLength2;
